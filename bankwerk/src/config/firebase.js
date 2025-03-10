@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
 dotenv.config();
 
@@ -13,4 +14,7 @@ const firebaseConfig = {
   appId: process.env.APPID
 };
 
-const bankwerk = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+export { db };
