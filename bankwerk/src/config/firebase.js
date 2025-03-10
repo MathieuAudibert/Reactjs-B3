@@ -1,20 +1,25 @@
-import dotenv from 'dotenv';
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+// import { initializeApp } from "firebase/app"
 
-dotenv.config();
+const admin = require('firebase-admin')
+require('dotenv').config()
 
-const firebaseConfig = {
-  apiKey: process.env.APIKEY,
-  authDomain: process.env.AUTHDOMAIN,
-  databaseURL: process.env.DATABASEURL,
-  projectId: process.env.PROJECTID,
-  storageBucket: process.env.STORAGEBUCKET,
-  messagingSenderId: process.env.MESSAGINGSENDERID,
-  appId: process.env.APPID
-};
+const firebaseAccount = require('../config/config.json')
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+admin.initializeApp({
+  credential: admin.credential.cert(firebaseAccount)
+})
 
-export { db };
+
+// const firebaseConfig = {
+//   apiKey: process.env.APIKEY,
+//   authDomain: process.env.AUTHDOMAIN,
+//   databaseURL: process.env.DATABASEURL,
+//   projectId: process.env.PROJECTID,
+//   storageBucket: process.env.STORAGEBUCKET,
+//   messagingSenderId: process.env.MESSAGINGSENDERID,
+//   appId: process.env.APPID
+// };
+
+const auth = admin.auth()
+const db = admin.firestore()
+module.exports = {auth, db}
