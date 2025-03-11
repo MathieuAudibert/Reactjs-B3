@@ -5,9 +5,11 @@ require('dotenv').config()
 
 const firebaseAccount = require('../config/config.json')
 
+if (!admin.apps.length) {
 admin.initializeApp({
   credential: admin.credential.cert(firebaseAccount)
 })
+}
 
 
 // const firebaseConfig = {
