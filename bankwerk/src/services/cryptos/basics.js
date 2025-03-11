@@ -31,24 +31,10 @@ const cryptoInfosParSymbol = async (symbol) => {
      * infos (dict) : infos de la crypto
      */
     try {  
-        res = await axios.get(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest`, {
-            headers: { "X-CMC_PRO_API_KEY": api_key },
-            params: { symbol, conver: "EUR" }
-        })
-        return { data: res.data.data[symbol], error: null }
+        res = await axios.get(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${symbol}&CMC_PRO_API_KEY=${api_key}`)
+        return { data: res.data.data, error: null}
     } catch (error) {
         console.error(error)
         return { data: null, error: error.message }
     }
-}
-
-const cryptoInfosParNom = async (nom) => {
-    /** Renvoie les informations d'une crypto en fonction de son nom
-     * 
-     * Args : 
-     * nom (str)
-     * 
-     * Returns : 
-     * infos (dict) : infos de la crypto
-     */
 }
