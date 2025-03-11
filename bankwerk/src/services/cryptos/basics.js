@@ -84,7 +84,6 @@ async function cryptoInfosParNom (nom){
     }
 }
 
-
 module.exports = {
     topCryptos,
     symbolParNom,
