@@ -4,7 +4,7 @@ const axios = require('axios')
 const api_key = process.env.CRYPTO_API_KEY
 let res
 
-const topCryptos = async () => {
+async function topCryptos() {
     /** Recupere les 10 cryptos les plus populaires (en fonction de leur capitalisation)
      * 
      * Args : 
@@ -21,7 +21,7 @@ const topCryptos = async () => {
     }
 }
 
-const cryptoInfosParSymbol = async (symbol) => {
+async function cryptoInfosParSymbol(symbol) {
     /** Renvoie les informations d'une crypto en fonction de son symbole
      * 
      * Args :
