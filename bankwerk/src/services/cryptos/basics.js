@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const axios = require('axios')
 const api_key = process.env.CRYPTO_API_KEY
-let res = null
+let res
 
 const topCryptos = async () => {
     /** Recupere les 10 cryptos les plus populaires (en fonction de leur capitalisation)
