@@ -16,21 +16,50 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Avec Next plus besoin de App.js ni d'un router
+Dans Next.js, chaque dossier dans app/ est une route !
 
-## Learn More
+| ⚛️ React Classique | ⚡ Next.js (App Router) |
+|--------------------|------------------------|
+| `App.js` gère tout | Plus de `App.js` |
+| `react-router-dom` pour gérer les pages | Chaque dossier dans `app/` est une page |
+| Fichiers `.jsx` dans `src/pages/` | Fichiers `page.jsx` dans `app/` |
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+📌 Structure recommandée pour Next.js ( FRONT-END )
+📂 src/
+    📂 app/ (Dossier principal du projet, contenant les routes & pages)
+        📂 api/ ( Dossier des routes API, login, register, etc.... )
+        📂 dashboard/
+          📄 page.jsx (Affiché à `/dashboard` )
+        📄 page.jsx (Page d'accueil ou HomePage du projet)
+        📄 layout.js ( Layout sert à eviter de repeter du code et avoir des elements fixes sur la page comme le composant <Footer/> ou <Header/> ) 
+    📂 components/ (Dossier pour les composants réutilisables comme Header.jsx)
+        📄 Header.jsx
+        📄 LoginForm.jsx (Composant du formulaire de connexion)
+        📄 RegisterForm.jsx (Composant du formulaire d'inscription)
+    📂 config/ 
+    📂 styles/ (Pour organiser le CSS)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+📌 Où mettre tes fichiers JSX ?
 
-## Deploy on Vercel
+Les pages 📄 → Dans app/
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    app/page.jsx → Page d'accueil (HomePage).
+    app/dashboard/page.jsx → Page du dashboard après connexion
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Les composants réutilisables ⚛️ → Dans components/
+
+    Header.jsx, Footer.jsx, Button.jsx, etc.
+    LoginForm.jsx et RegisterForm.jsx pour les formulaires.
+
+Les API (backend) 🔗 → Dans app/api/
+
+    app/api/login/route.js → Route pour la connexion.
+    app/api/register/route.js → Route pour l'inscription.
+
+Les styles 🎨 → Dans styles/ ou directement dans des fichiers .module.css
+
+    Exemple : styles/globals.css
+    Exemple : styles/login.module.css
