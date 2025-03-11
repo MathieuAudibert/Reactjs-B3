@@ -1,8 +1,8 @@
-const { auth, db } = require('../../../config/firebase')
+const { auth, db } = require('../../../config/firebaseAdmin')
 const bcrypt  = require('bcrypt')
 
 export async function POST(req) {
-    const { nom, prenom, mdp, email, solde, compte_id, date_crea_cpt } = await req.json() // change with body
+    const { nom, prenom, mdp, email } = await req.json() // change with body
     const createdDate = new Date()
     try {
         
@@ -51,7 +51,9 @@ export async function POST(req) {
             date_crea_cpt: date_creaAccountData
         })
         
-        return Response.json({ uid: user.uid, email: user.email })
+        const token = await auth.createCustomToken(user.uid)
+
+        return Response.json({ uid: user.uid, email: user.email, token })
 
     } catch (error) {
 
