@@ -14,7 +14,7 @@ async function topCryptos() {
      */
     try {
         res = await axios.get(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=10&CMC_PRO_API_KEY=${api_key}&sort=cmc_rank`)
-        return { data: res.data.data, error: null}
+        return { data: res.data.data, error: null }
     } catch (error) {
         console.error(error) 
         return { data: null, error: error.message }
@@ -32,7 +32,7 @@ async function cryptoInfosParSymbol(symbol) {
      */
     try {  
         res = await axios.get(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${symbol}&CMC_PRO_API_KEY=${api_key}`)
-        return { data: res.data.data, error: null}
+        return { data: res.data.data, error: null }
     } catch (error) {
         console.error(error)
         return { data: null, error: error.message }
