@@ -31,8 +31,11 @@ const cryptoInfosParSymbol = async (symbol) => {
      * infos (dict) : infos de la crypto
      */
     try {  
-        res = await axios.get(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/airdrops?symbol=${symbol}&CMC_PRO_API_KEY=${api_key}`)
-        return { data: res.data.data, error: null }
+        res = await axios.get(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest`, {
+            headers: { "X-CMC_PRO_API_KEY": api_key },
+            params: { symbol, conver: "EUR" }
+        })
+        return { data: res.data.data[symbol], error: null }
     } catch (error) {
         console.error(error)
         return { data: null, error: error.message }
