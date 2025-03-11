@@ -2,7 +2,7 @@ const { auth, db } = require('../../../config/firebaseAdmin')
 const bcrypt  = require('bcrypt')
 
 export async function POST(req) {
-    const { nom, prenom, mdp, email } = await req.json() // change with body
+    const { nom, prenom, mdp, email } = await req.body() // change with body
     const createdDate = new Date()
     try {
         

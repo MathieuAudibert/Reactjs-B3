@@ -2,7 +2,7 @@ const { signInWithEmailAndPassword } = require('firebase/auth')
 const { auth } = require('../../../config/firebaseClient')
 
 export async function POST(req) {
-    const { email, mdp } = await req.json()
+    const { email, mdp } = await req.body()
 
     try {
         if (!email || !mdp) {
