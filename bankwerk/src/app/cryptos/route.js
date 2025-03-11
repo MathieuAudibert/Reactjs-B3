@@ -3,6 +3,5 @@ const { topCryptos, cryptoInfosParSymbol, cryptoInfosParNom } = require('./basic
 
 export async function GET(req) {
     const cryptos = db.collection('Crypto').get();
-
     
 }
