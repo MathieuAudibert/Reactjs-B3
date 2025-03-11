@@ -21,6 +21,31 @@ async function topCryptos() {
     }
 }
 
+async function symbolParNom (nom) {
+    /** Recupere le symbole d'une crypto en fonction de son nom
+     * 
+     * Args :
+     * nom (str) : le string rentré par l'user 
+     * 
+     * Returns : 
+     * symbol (str) : symbole relié a la crypto
+     */
+    try {
+        res = await axios.get(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/map?CMC_PRO_API_KEY=${api_key}`)
+        const crypto = res.data.find(c => c.name.toLowerCase() === nom.toLowerCase())
+        
+        if (crypto) {
+            return { symbol: crypto.symbol, error: null }
+        } else {
+            return { symbol: null, error: 'Pas de crypto trouvé avec ce nom'}
+        }
+
+    } catch (error) {
+        console.error(error)
+        return { data: null, error: error.message }
+    }
+}
+
 async function cryptoInfosParSymbol(symbol) {
     /** Renvoie les informations d'une crypto en fonction de son symbole
      * 
