@@ -1,16 +1,25 @@
-import dotenv from 'dotenv';
-import { initializeApp } from "firebase/app";
+// import { initializeApp } from "firebase/app"
 
-dotenv.config();
+const admin = require('firebase-admin')
+require('dotenv').config()
 
-const firebaseConfig = {
-  apiKey: process.env.APIKEY,
-  authDomain: process.env.AUTHDOMAIN,
-  databaseURL: process.env.DATABASEURL,
-  projectId: process.env.PROJECTID,
-  storageBucket: process.env.STORAGEBUCKET,
-  messagingSenderId: process.env.MESSAGINGSENDERID,
-  appId: process.env.APPID
-};
+const firebaseAccount = require('../config/config.json')
 
-const bankwerk = initializeApp(firebaseConfig);
+admin.initializeApp({
+  credential: admin.credential.cert(firebaseAccount)
+})
+
+
+// const firebaseConfig = {
+//   apiKey: process.env.APIKEY,
+//   authDomain: process.env.AUTHDOMAIN,
+//   databaseURL: process.env.DATABASEURL,
+//   projectId: process.env.PROJECTID,
+//   storageBucket: process.env.STORAGEBUCKET,
+//   messagingSenderId: process.env.MESSAGINGSENDERID,
+//   appId: process.env.APPID
+// };
+
+const auth = admin.auth()
+const db = admin.firestore()
+module.exports = {auth, db}
