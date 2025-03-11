@@ -16,5 +16,6 @@ Réaliser une plateforme d'échange bancaire
 Attention : il s'agit d'un cours de ReactJs, la bonne utilisation de react est au cœur du projet. 
 
 | Romeo Agostino | Andrija Tomic | Mathieu Audibert |
+| -------------- | -------------- | -------------- |
 | @RomeoAg13 | @AndrijaFF | @MathieuAudibert |
 | romeo.agostino@efrei.net | andrija.tomic@efrei.net | mathieu.audibert@efrei.net |
