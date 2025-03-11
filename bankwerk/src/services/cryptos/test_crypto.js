@@ -1,6 +1,6 @@
 const { topCryptos, symbolParNom, cryptoInfosParSymbol, cryptoInfosParNom } = require('./basics.js');
 
-async function test(description, callback) {
+async function test_crypto(description, callback) {
     console.log(`test: ${description}`);
     try {
         await callback();
