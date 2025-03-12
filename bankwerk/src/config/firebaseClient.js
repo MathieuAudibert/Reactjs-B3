@@ -2,7 +2,6 @@ const { initializeApp } = require("firebase/app")
 const { getAuth } = require("firebase/auth")
 require('dotenv').config()
 
-
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_APIKEY,
   authDomain: process.env.NEXT_PUBLIC_AUTHDOMAIN,
@@ -16,7 +15,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);
 
 async function getToken() {
   const user = auth.currentUser;
@@ -29,5 +27,4 @@ async function getToken() {
 module.exports = {
   auth,
   getToken,
-  db
 }
