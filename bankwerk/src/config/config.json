@@ -1,0 +1,13 @@
+{
+    "type": "service_account",
+    "project_id": "bankwerk-1a8f9",
+    "private_key_id": "cb5c1098e4465bfc0123b3fc7e5feab8c52d01a1",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDIc5ZOczDjO95+\nw9v62Pzd6XHOLvDrsD7/g3IkWIPU9mxz16aqGJt1Gpoqt1V4/rMZPQ+XMkZnpr1y\n6AXioohAEmJIYPQBf2VIyesUV3AnnWN8WgLy2Cu4FMbpVWBCHjHj4d7RlgzXD3Aw\nJLUVsYhz6DyWeQXE7EKl/l2fWlxYVZpNIdlxVngM3kejI9LX4wD+l2FPRcB8Gr1Q\nm3FoszgPN4otxXvzfh3HxTRI20PiPgIS4lhw2Ggyc7Rcy4NZNFl0oTU1bJspHH5h\nG5TLKCT+r/0WcpIuyzn1k9Ks/OBzC6tG1tOWZ0dvoVGqqcMKo4LwLRjCHCw5f+WM\nJtJP7JRDAgMBAAECggEASxZNUA7DWeOT2W15ylIdCu2HFYKs+cS4HJO7HpVPsOcs\nQgqeomn8VdYEuQqbCGt0YHhoji0lhW9G2TPD/J0Ap+ubCFzVGniD0svcdO66EwTY\nfvzizOAgJGEYD9DM8YeJDcGO63inT6o3Trl5YepyYGS2yXEFMbqEztRlcqtxGx8w\nKYIBuVgKcJWmg9dh1EqKtO4TZGzcgKF2ehDsbvT4rFX40n+zT12xm7Od8gU0FG0v\nju5RKezhyi1WUmb/zlXIJ0JqRX5tokzd85z70QZxNuuAhY/u9y5XRxRzqerQ1GqF\nVVuWf18u13UaY0wzm9ffuPyuDytvWOHO7fNA2NiVoQKBgQDkEsaZufx2ngWN5qsN\nM06nvnxLC8JdVcDf8zUo4n4YVFA6E8DbZqx3q4WnccrykWGZdzJjDVwiYO8Q9Go9\nGKsCuOJdxe9Vdk1256gQ/kfPpkv/G/O7Eb2ppEWy90WsXT/gxw4of6nG9vJYI0OD\nUNgz7izAf5cpKrihtCWMrJGjowKBgQDg/vkSqfrxGgEQmyPYaUxUCr5FHcb1/uhn\nF1c1sqmmNzU9MOA1rHkLDbmbeWdma6xvZ+tVhrXfz96C4sOI0gVDo7Kv/4MppnTz\nRUKdJ9oW+4seRJITA/MmeExGjMlLFjGh8j8kLZtVIwN5REIkrN/J0Zs+5UCddzkD\nvvSJVHFW4QKBgQCfwKsNqKG3ME6xq33q3CJfCuUi59S37cYQ19lHjwZF4mDjnUx8\nIbnyhNk0hVdjewPDLCPGD+iWSBGMbbcwnmPCn2An0OookZoHDJLDfGkugMxAoAKj\n6PRRrDgJ+Hv8FMEWoDdBlNKGBBmSNPkoNOuLzGvaVkS6WCtFUNrwYzwMQwKBgQC8\nFGghMfaTlSlOuGE+hsdHebOUE1A+UtfzVY+RU8h9KalXfYPvWj3U/6QoU1QcSeXb\nOwN+ex2N+jYHM4hA10+PO0gj13PNXVhmA3+r36Rvkda5dpilTKf1gJpCX23lVqgm\nuFoP5A/1G0/MD0M7ZUetbYpZCUr6Vq9Sck34fp5AAQKBgQCnIqBbClhwVz7ttUE3\nxpGV7PObzdCT7b0RAMoba3rZlnLKxFOyhvhrEZxGVpimRqZavZ4Qqah86mp5bf6N\ntkcx4WzBYlysiB0nEOXUfZFZ+Kg3Z8Pe5KqQdJ2rZE5m1gT+awzJHdaNHuAfz+Za\nnEwVRI5sUHZtvaHZ4ceROrT+yA==\n-----END PRIVATE KEY-----\n",
+    "client_email": "firebase-adminsdk-fbsvc@bankwerk-1a8f9.iam.gserviceaccount.com",
+    "client_id": "105980551787952688902",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40bankwerk-1a8f9.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+  }
