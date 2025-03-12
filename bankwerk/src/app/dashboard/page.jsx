@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import "../styles/globals.css";
+import "../../styles/globals.css";
 
 export default function Dashboard() {
   const [solde, setSolde] = useState(0);
