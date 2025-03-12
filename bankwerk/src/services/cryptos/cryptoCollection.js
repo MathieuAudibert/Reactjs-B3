@@ -1,4 +1,4 @@
-const { auth, db } = require('../../config/firebase.js');
+const { auth, db } = require('../../config/firebaseAdmin.js');
 const { topCryptos, cryptoInfosParSymbol } = require('./basics.js');
 
 const cryptoCollection = db.collection('Crypto');
