@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "./components/Header";
+import Navbar from "../components/Header";
 import "./styles/globals.css";
 
 export const metadata = {

@@ -11,7 +11,6 @@ body {
   align-items: center;
 }
 
-/* Navbar */
 .navbar {
   background-color: #000;
   padding: 15px 20px;
@@ -117,4 +116,28 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+#deco {
+  background-color: transparent;
+  border: 2px solid white;
+  color: white;
+  font-size: 14px;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#deco:hover {
+  background-color: white;
+  color: black;
+  border: 2px solid black;
 }

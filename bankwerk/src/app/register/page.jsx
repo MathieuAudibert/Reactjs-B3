@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation"; // Pour la redirection
 import "../styles/globals.css";
 
 export default function RegisterPage() {
@@ -7,11 +8,42 @@ export default function RegisterPage() {
   const [prenom, setPrenom] = useState("");
   const [email, setEmail] = useState("");
   const [mdp, setMdp] = useState("");
+  const [error, setError] = useState("");
+  const [user, setUser] = useState(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Inscription soumise");
+    setError("");
+
+    const res = await fetch("/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nom, prenom, email, mdp }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify({ email: data.email, uid: data.uid }));
+      setUser({ email: data.email, uid: data.uid });
+      
+      router.push("/dashboard"); 
+      window.location.reload();
+    } else {
+      setError(data.error || "Une erreur est survenue.");
+    }
   };
+
+
 
   return (
     <div className="container">
