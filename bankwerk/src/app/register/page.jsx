@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation"; // Pour la redirection
-import "../styles/globals.css";
+import { handleChange } from "next/form";
+import { useRouter } from "next/navigation"; 
+import "../../styles/globals.css";
 
 export default function RegisterPage() {
   const [nom, setNom] = useState("");
@@ -49,12 +50,14 @@ export default function RegisterPage() {
     <div className="container">
       <h1>Inscription</h1>
       <form onSubmit={handleSubmit} className="form">
-        <input type="text" placeholder="Nom" value={nom} onChange={(e) => setNom(e.target.value)} required />
-        <input type="text" placeholder="Prénom" value={prenom} onChange={(e) => setPrenom(e.target.value)} required />
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        <input type="password" placeholder="Mot de passe" value={mdp} onChange={(e) => setMdp(e.target.value)} required />
+        <input type="text" placeholder="Nom" name="nom" onChange={handleChange} required />
+        <input type="text" placeholder="Prénom" name="prenom" onChange={handleChange} required />
+        <input type="email" placeholder="Email" name="email" onChange={handleChange} required />
+        <input type="password" placeholder="Mot de passe" name="mdp" onChange={handleChange} required />
+        <p>Mot de passe oublié ?</p>
         <button type="submit">S'inscrire</button>
+        <p>Déjà un compte ? Connectez-vous ici.</p>
       </form>
     </div>
-  );
+  )
 }

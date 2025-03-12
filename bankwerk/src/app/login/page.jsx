@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation"; 
-import "../styles/globals.css";
+import "../../styles/globals.css";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
