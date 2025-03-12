@@ -40,5 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-src/config/configu.json
+src/config/config.json
 src/services/cryptos/config.json
