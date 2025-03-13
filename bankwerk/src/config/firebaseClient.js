@@ -2,7 +2,6 @@ const { initializeApp } = require("firebase/app")
 const { getAuth } = require("firebase/auth")
 require('dotenv').config()
 
-
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_APIKEY,
   authDomain: process.env.NEXT_PUBLIC_AUTHDOMAIN,

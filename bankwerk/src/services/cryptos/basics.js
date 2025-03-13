@@ -32,10 +32,10 @@ async function symbolParNom (nom) {
         res = await axios.get(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/map?CMC_PRO_API_KEY=${api_key}`)
         const crypto = res.data.data.find(c => c.name.toLowerCase() === nom.toLowerCase())
         
-        if (crypto) {
-            return { symbol: crypto.symbol, error: null }
-        } else {
+        if (!crypto) {
             return { symbol: null, error: 'Pas de crypto trouvé avec ce nom'}
+        } else {
+            return { symbol: crypto.symbol, error: null }
         }
 
     } catch (error) {
