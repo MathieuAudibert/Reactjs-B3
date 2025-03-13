@@ -1,47 +1,47 @@
-const { topCryptos, symbolParNom, cryptoInfosParSymbol, cryptoInfosParNom } = require('./basics.js');
+const { topCryptos, symbolParNom, cryptoInfosParSymbol, cryptoInfosParNom } = require('./basics.js')
 
 async function test_crypto(description, callback) {
-    console.log(`test: ${description}`);
+    console.log(`test: ${description}`)
     try {
-        await callback();
-        console.log('✅ test OK');
+        await callback()
+        console.log('✅ test OK')
     } catch (error) {
-        console.error('❌ test KO:', error.message);
+        console.error('❌ test KO:', error.message)
     }
-    console.log('-------------------------------------------------------------------------------------------------------------------------------------');
+    console.log('-------------------------------------------------------------------------------------------------------------------------------------')
 }
 
 (async () => {
     await test('topCryptos', async () => {
-        const result = await topCryptos();
+        const result = await topCryptos()
         if (!result.data || result.error) {
-            throw new Error('Erreur');
+            throw new Error('Erreur')
         }
-        console.log('Top 10 Cryptos:', result.data);
-    });
+        console.log('Top 10 Cryptos:', result.data)
+    })
 
     
     await test('symbolParNom', async () => {
-        const result = await symbolParNom('Bitcoin');
+        const result = await symbolParNom('Bitcoin')
         if (!result.symbol || result.error) {
-            throw new Error('Erreur');
+            throw new Error('Erreur')
         }
-        console.log('Symbole pour Bitcoin:', result.symbol);
-    });
+        console.log('Symbole pour Bitcoin:', result.symbol)
+    })
 
     await test('cryptoInfosParSymbol', async () => {
-        const result = await cryptoInfosParSymbol('BTC');
+        const result = await cryptoInfosParSymbol('BTC')
         if (!result.data || result.error) {
-            throw new Error('Erreur');
+            throw new Error('Erreur')
         }
-        console.log('Infos pour BTC:', result.data);
-    });
+        console.log('Infos pour BTC:', result.data)
+    })
 
     await test('cryptoInfosParNom', async () => {
-        const result = await cryptoInfosParNom('Ethereum');
+        const result = await cryptoInfosParNom('Ethereum')
         if (!result.data || result.error) {
-            throw new Error('Erreur');
+            throw new Error('Erreur')
         }
-        console.log('Infos pour Ethereum:', result.data);
-    });
-})();
+        console.log('Infos pour Ethereum:', result.data)
+    })
+})()

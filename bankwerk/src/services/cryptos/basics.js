@@ -72,12 +72,12 @@ async function cryptoInfosParNom (nom){
          * infos (dict) : infos de la crypto
          */
     try {
-        const symbolResult = await symbolParNom(nom);
+        const symbolResult = await symbolParNom(nom)
         if (symbolResult.error) {
-            throw new Error(symbolResult.error);
+            throw new Error(symbolResult.error)
         }
-        const res = await cryptoInfosParSymbol(symbolResult.symbol);
-        return { data: res.data, error: null };
+        const res = await cryptoInfosParSymbol(symbolResult.symbol)
+        return { data: res.data, error: null }
     } catch (error) {
         console.error(error)
         return { data: null, error: error.message }
@@ -89,4 +89,4 @@ module.exports = {
     symbolParNom,
     cryptoInfosParSymbol,
     cryptoInfosParNom
-};
+}
