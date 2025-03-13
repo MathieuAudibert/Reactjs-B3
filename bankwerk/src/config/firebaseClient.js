@@ -26,5 +26,5 @@ async function getToken() {
 
 module.exports = {
   auth,
-  getToken,
+  getToken
 }

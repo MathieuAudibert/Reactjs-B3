@@ -23,4 +23,6 @@ async function verifyToken(req) {
   }
 }
 
+
 module.exports = { auth, db, verifyToken }
+
