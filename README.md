@@ -23,6 +23,7 @@
   * [ ] Front
 * [ ] Design UI 
 
+
 * [ ] voir les cours de la bourse (facultatif)
 * [ ] réaliser des virements interBancaire (facultatif)
 * [ ] avoir un compte épargne (facultatif) 
