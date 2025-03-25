@@ -2,9 +2,9 @@ import { db } from '../../../config/firebaseAdmin';
 
 export async function POST(req) {
     try {
-        const { compte_cible, id_compte, montant, type } = await req.json();
+        const { rib_cible, rib_deb, montant, type } = await req.json();
         
-        if (!compte_cible || !id_compte || !montant || !type) {
+        if (!rib_cible || !rib_deb || !montant || !type) {
             return new Response(JSON.stringify({ error: 'Tous les champs sont obligatoires' }), {
                 status: 400,
                 headers: { 'Content-Type': 'application/json' },
@@ -19,12 +19,12 @@ export async function POST(req) {
         }
 
         const compteSourceSnapshot = await db.collection('Compte')
-            .where('rib', '==', id_compte)
+            .where('rib', '==', rib_deb)
             .limit(1)
             .get();
 
         const compteDestSnapshot = await db.collection('Compte')
-            .where('rib', '==', compte_cible)
+            .where('rib', '==', rib_cible)
             .limit(1)
             .get();
 
@@ -49,16 +49,17 @@ export async function POST(req) {
         }
 
         await db.collection('Transactions').doc().set({
-            compte_cible: compte_cible,
-            date_transa: new Date(),
-            details: {
-                nombre_crypto: '',
-                prix_unite_crypto: '',
-                id_crypto: '',
-            },
+            rib_cible: rib_cible,
+            rib_deb: rib_deb,
             id_compte: compteDestDoc.id,
+            date_transa: new Date(),
             montant: montant,
             type: type,
+            details: {
+                id_crypto: '',
+                nombre_crypto: '',
+                prix_unite_crypto: '',
+            },
         });
 
         await db.collection('Compte').doc(compteSourceDoc.id).update({
