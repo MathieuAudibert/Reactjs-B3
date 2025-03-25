@@ -26,7 +26,7 @@ export default function LoginPage() {
       localStorage.setItem("user", JSON.stringify(data.uid))
       setUser(data.uid)
       router.push("/dashboard")
-
+      window.location.reload()
     } else {
       setError(data.error || "Identifiants incorrects.");
     }
