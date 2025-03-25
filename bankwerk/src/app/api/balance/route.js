@@ -26,7 +26,8 @@ export async function GET(req) {
         }
         
         const solde = soldeDoc.data().solde;
-        return new Response(JSON.stringify({ solde }), {
+        const rib = soldeDoc.data().rib;
+        return new Response(JSON.stringify({ solde, rib }), {
             headers: {
                 'Content-Type': 'application/json',
             },

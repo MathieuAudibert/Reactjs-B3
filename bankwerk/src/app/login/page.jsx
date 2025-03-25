@@ -25,7 +25,6 @@ export default function LoginPage() {
   
       router.push("/dashboard")
 
-      window.location.reload();
     } else {
       setError(data.error || "Identifiants incorrects.");
     }
