@@ -6,8 +6,20 @@ export async function POST(req) {
         const { nom, prenom, mdp, email } = await req.json();
         const createdDate = new Date();
 
-        if (!nom || !prenom || !mdp || !email) {
-            return new Response(JSON.stringify({ error: 'Veuillez remplir tous les champs.' }), { status: 400 });
+        if (!nom) {
+            return new Response(JSON.stringify({ error: 'Veuillez remplir le champ nom.' }), { status: 400 });
+        }
+
+        if (!prenom) {
+            return new Response(JSON.stringify({ error: 'Veuillez remplir le champ prénom.' }), { status: 400 });
+        }
+
+        if (!email) {
+            return new Response(JSON.stringify({ error: 'Veuillez remplir le champ email.' }), { status: 400 });
+        }
+
+        if (!mdp) {
+            return new Response(JSON.stringify({ error: 'Veuillez remplir le champ mot de passe.' }), { status: 400 });
         }
 
         if (mdp.length < 6) {

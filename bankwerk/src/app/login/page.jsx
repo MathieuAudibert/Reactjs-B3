@@ -7,15 +7,15 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [mdp, setMdp] = useState("");
   const [error, setError] = useState("");
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState("");
   const router = useRouter();
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedUser = localStorage.getItem("user");
+  //   if (storedUser) {
+  //     setUser(JSON.parse(storedUser));
+  //   }
+  // }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,12 +29,13 @@ export default function LoginPage() {
 
     const data = await res.json();
 
+    console.log(data);
     if (res.ok) {
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify({ email: data.email, uid: data.uid }));
-      setUser({ email: data.email, uid: data.uid });
-      
-      router.push("/dashboard"); 
+      localStorage.setItem("token", data.token, { expires: 1 })
+  
+      router.push("/dashboard")
+
+      window.location.reload();
     } else {
       setError(data.error || "Identifiants incorrects.");
     }
