@@ -11,22 +11,25 @@ export default function Dashboard() {
     const fetchSolde = async () => {
       try {
         const userString = localStorage.getItem('user');
-        const user = userString ? JSON.parse(userString) : null;
 
-        if (!user || !user.uid) {
+        if (!userString) {
           setIsLoggedIn(false);
           setLoading(false);
           return;
         }
 
-        const response = await fetch(`/api/balance?uid=${user.uid}`, {
-          method: "GET",
-        });
-  
-        if (response.status === 401) {
+        const user = JSON.parse(userString);
+        const uid = user.uid;
+        
+        if (!uid) {
           setIsLoggedIn(false);
+          setLoading(false);
           return;
         }
+
+        const response = await fetch(`/api/balance?uid=${uid}`, {
+          method: "GET",
+        });
 
         if (!response.ok) {
           throw new Error("Failed to fetch balance")
