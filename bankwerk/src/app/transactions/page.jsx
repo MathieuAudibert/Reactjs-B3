@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 import "../../styles/globals.css";
 
 export default function Transactions() {
-  const [ribs, setRibs] = useState([]);
+  const [userRib, setUserRib] = useState('');
+  const [knownRibs, setKnownRibs] = useState([]);
   const [formData, setFormData] = useState({
     rib_deb: '',
     rib_cible: '',
@@ -13,21 +14,36 @@ export default function Transactions() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [ribInputMode, setRibInputMode] = useState('select'); 
 
   useEffect(() => {
-    const fetchRibs = async () => {
+    const fetchUserData = async () => {
       try {
-        const response = await fetch('/api/all-ribs');
-        if (!response.ok) throw new Error('Erreur lors de la récupération des RIBs');
+        const userString = localStorage.getItem('user');
+        const user = JSON.parse(userString);
+        const uid = user;
+        
+        if (!uid) throw new Error('Utilisateur non connecté');
+
+        const response = await fetch(`/api/balance?uid=${uid}`);
+        if (!response.ok) throw new Error('Erreur lors de la récupération des données');
+        
         const data = await response.json();
-        setRibs(data.ribs);
+        setUserRib(data.rib);
+        setFormData(prev => ({ ...prev, rib_deb: data.rib }));
+
+        const knownRibsResponse = await fetch(`/api/ribs-connus?uid=${uid}`);
+        if (knownRibsResponse.ok) {
+          const knownRibsData = await knownRibsResponse.json();
+          setKnownRibs(knownRibsData.ribs || []);
+        }
       } catch (err) {
         console.error(err);
-        setError('Impossible de charger les RIBs disponibles');
+        setError(err.message);
       }
     };
-    
-    fetchRibs();
+
+    fetchUserData();
   }, []);
 
   const handleChange = (e) => {
@@ -45,6 +61,16 @@ export default function Transactions() {
     setSuccess('');
 
     try {
+      const ribCheckResponse = await fetch(`/api/check-rib?rib=${formData.rib_cible}`);
+      if (!ribCheckResponse.ok) {
+        throw new Error('RIB bénéficiaire invalide');
+      }
+
+      const ribCheckData = await ribCheckResponse.json();
+      if (!ribCheckData.exists) {
+        throw new Error('Le RIB bénéficiaire n\'existe pas');
+      }
+
       const response = await fetch('/api/transactions', {
         method: 'POST',
         headers: {
@@ -52,23 +78,40 @@ export default function Transactions() {
         },
         body: JSON.stringify({
           ...formData,
-          montant: parseFloat(formData.montant)
+          montant: parseFloat(formData.montant),
+          rib_deb: userRib 
         })
       });
 
       const data = await response.json();
-
+      const userString = localStorage.getItem('user');
+      const user = JSON.parse(userString);
+      const uid = user;
+      
       if (!response.ok) {
         throw new Error(data.error || 'Erreur lors de la transaction');
       }
 
+      if (!knownRibs.some(rib => rib === formData.rib_cible)) {
+        await fetch(`/api/add-known-rib`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            uid: uid,
+            newRib: formData.rib_cible
+          })
+        });
+        setKnownRibs(prev => [...prev, formData.rib_cible]);
+      }
+
       setSuccess('Transaction effectuée avec succès!');
-      setFormData({
-        rib_deb: '',
+      setFormData(prev => ({
+        ...prev,
         rib_cible: '',
-        montant: '',
-        type: 'virement'
-      });
+        montant: ''
+      }));
     } catch (err) {
       setError(err.message);
     } finally {
@@ -85,37 +128,61 @@ export default function Transactions() {
 
       <form onSubmit={handleSubmit} className="transaction-form">
         <div className="form-group">
-          <label>RIB Débiteur:</label>
-          <select 
-            name="rib_deb" 
-            value={formData.rib_deb} 
-            onChange={handleChange}
-            required
-          >
-            <option value="">Sélectionnez votre RIB</option>
-            {ribs.map(rib => (
-              <option key={rib.rib} value={rib.rib}>
-                {rib.rib} (Solde: {rib.solde} €)
-              </option>
-            ))}
-          </select>
+          <label>Votre RIB:</label>
+          <input
+            type="text"
+            value={userRib}
+            readOnly
+            className="read-only-input"
+          />
         </div>
 
         <div className="form-group">
           <label>RIB Bénéficiaire:</label>
-          <select 
-            name="rib_cible" 
-            value={formData.rib_cible} 
-            onChange={handleChange}
-            required
-          >
-            <option value="">Sélectionnez le RIB du bénéficiaire</option>
-            {ribs.filter(rib => rib.rib !== formData.rib_deb).map(rib => (
-              <option key={rib.rib} value={rib.rib}>
-                {rib.rib}
-              </option>
-            ))}
-          </select>
+          
+          <div className="rib-input-container">
+            <div className="rib-input-options">
+              <button
+                type="button"
+                className={`rib-mode-btn ${ribInputMode === 'select' ? 'active' : ''}`}
+                onClick={() => setRibInputMode('select')}
+              >
+                Choisir un RIB connu
+              </button>
+              <button
+                type="button"
+                className={`rib-mode-btn ${ribInputMode === 'input' ? 'active' : ''}`}
+                onClick={() => setRibInputMode('input')}
+              >
+                Saisir un nouveau RIB
+              </button>
+            </div>
+
+            {ribInputMode === 'select' ? (
+              <select
+                name="rib_cible"
+                value={formData.rib_cible}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Sélectionnez un RIB</option>
+                {knownRibs.map(rib => (
+                  <option key={rib} value={rib}>
+                    {rib}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <input
+                type="text"
+                name="rib_cible"
+                value={formData.rib_cible}
+                onChange={handleChange}
+                placeholder="Entrez le RIB bénéficiaire"
+                required
+              />
+            )}
+          </div>
         </div>
 
         <div className="form-group">

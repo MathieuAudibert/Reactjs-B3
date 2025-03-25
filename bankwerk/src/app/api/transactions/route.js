@@ -51,7 +51,7 @@ export async function POST(req) {
         await db.collection('Transactions').doc().set({
             rib_cible: rib_cible,
             rib_deb: rib_deb,
-            id_compte: compteDestDoc.id,
+            id_compte: compteSourceDoc.id,
             date_transa: new Date(),
             montant: montant,
             type: type,
