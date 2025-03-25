@@ -10,14 +10,26 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchSolde = async () => {
       try {
-        const response = await fetch("/api/balance", {
-          method: "GET",
-        });
-  
-        if (response.status === 401) {
+        const userString = localStorage.getItem('user');
+
+        if (!userString) {
           setIsLoggedIn(false);
+          setLoading(false);
           return;
         }
+
+        const user = JSON.parse(userString);
+        const uid = user.uid;
+        
+        if (!uid) {
+          setIsLoggedIn(false);
+          setLoading(false);
+          return;
+        }
+
+        const response = await fetch(`/api/balance?uid=${uid}`, {
+          method: "GET",
+        });
 
         if (!response.ok) {
           throw new Error("Failed to fetch balance")

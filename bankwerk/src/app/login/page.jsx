@@ -35,7 +35,6 @@ export default function LoginPage() {
       setUser({ email: data.email, uid: data.uid });
       
       router.push("/dashboard"); 
-      window.location.reload();
     } else {
       setError(data.error || "Identifiants incorrects.");
     }
