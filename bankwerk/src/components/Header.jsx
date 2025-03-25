@@ -14,7 +14,6 @@ export default function Header(){
     const token = localStorage.getItem("token")
     if(token) {
       setIsConnected(true)
-      router.push("/")
     }
   },[])
 
