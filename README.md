@@ -21,6 +21,7 @@
 * [ ] Réaliser des opérations de ventes/achats (/buy ou /transfer)
   * [ ] Back
   * [ ] Front
+* [ ] Design UI 
 
 * [ ] voir les cours de la bourse (facultatif)
 * [ ] réaliser des virements interBancaire (facultatif)
