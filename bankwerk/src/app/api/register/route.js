@@ -42,17 +42,14 @@ export async function POST(req) {
             email,
             mdp: hashedPassword,
             date_crea_cpt: '',
-            solde: 0,
             compte_id: user.uid,
             date_crea: createdDate
         });
 
         const userRef = db.collection('Users').doc(user.uid);
         const userDoc = await userRef.get();
-        const userSolde = userDoc.data().solde;
 
         await db.collection('Compte').doc(user.uid).set({
-            solde: userSolde,
             date_crea: createdDate,
             rib: rib
         });
