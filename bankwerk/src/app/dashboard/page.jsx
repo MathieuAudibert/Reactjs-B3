@@ -19,7 +19,7 @@ export default function Dashboard() {
         }
 
         const user = JSON.parse(userString);
-        const uid = user.uid;
+        const uid = user;
         
         if (!uid) {
           setIsLoggedIn(false);
