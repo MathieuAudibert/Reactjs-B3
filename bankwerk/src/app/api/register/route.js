@@ -1,6 +1,12 @@
 const { auth, db } = require('../../../config/firebaseAdmin');
 const bcrypt = require('bcrypt');
 
+function genereRIB() {
+    const prefix = "BWK92-"
+    const chiffres = Math.floor(Math.random() * 100000000).toString().padStart(8, '0')
+    return prefix + chiffres
+}
+
 export async function POST(req) {
     try {
         const { nom, prenom, mdp, email } = await req.json();
@@ -28,6 +34,7 @@ export async function POST(req) {
 
         const hashedPassword = await bcrypt.hash(mdp, 10);
         const user = await auth.createUser({ email, password: mdp });
+        const rib = genereRIB();
 
         await db.collection('Users').doc(user.uid).set({
             nom,
@@ -46,7 +53,8 @@ export async function POST(req) {
 
         await db.collection('Compte').doc(user.uid).set({
             solde: userSolde,
-            date_crea: createdDate
+            date_crea: createdDate,
+            rib: rib
         });
 
         const date_creaAccountDoc = await db.collection('Compte').doc(user.uid).get();
