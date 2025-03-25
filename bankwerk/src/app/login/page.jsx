@@ -7,16 +7,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [mdp, setMdp] = useState("");
   const [error, setError] = useState("");
-  // const [user, setUser] = useState("");
   const router = useRouter();
-
-  // useEffect(() => {
-  //   const storedUser = localStorage.getItem("user");
-  //   if (storedUser) {
-  //     setUser(JSON.parse(storedUser));
-  //   }
-  // }, []);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
