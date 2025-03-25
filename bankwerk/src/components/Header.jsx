@@ -20,6 +20,7 @@ export default function Header(){
 
   const logout = () => {
     localStorage.removeItem("token")
+    localStorage.removeItem("user")
     setIsConnected(false)
     router.push("/")
   }
@@ -32,6 +33,7 @@ export default function Header(){
             {
                 isConnected ? (
                     <ul>
+                        <li><Link href="/dashboard">DashBoard</Link></li>
                         <li><Link href="/profile">Mon Compte</Link></li>
                         <li><button onClick={logout}>Déconnexion</button></li>
                     </ul>

@@ -6,6 +6,7 @@ import "../../styles/globals.css";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [mdp, setMdp] = useState("");
+  const [user, setUser] = useState(null);
   const [error, setError] = useState("");
   const router = useRouter();
   const handleSubmit = async (e) => {
@@ -22,7 +23,8 @@ export default function LoginPage() {
 
     if (res.ok) {
       localStorage.setItem("token", data.token, { expires: 1 })
-  
+      localStorage.setItem("user", JSON.stringify(data.uid))
+      setUser(data.uid)
       router.push("/dashboard")
 
     } else {
