@@ -17,7 +17,7 @@
   * [x] Front
 * [ ] Réaliser des virements entre deux comptes (/transfer)
   * [x] Back
-  * [ ] Front
+  * [x] Front
 * [ ] Réaliser des opérations de ventes/achats (/buy ou /transfer)
   * [ ] Back
   * [ ] Front
