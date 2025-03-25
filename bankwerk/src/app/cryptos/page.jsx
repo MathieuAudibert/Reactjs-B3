@@ -1,30 +1,30 @@
-"use client";
-import { useState, useEffect } from 'react';
+"use client"
+import { useState, useEffect } from 'react'
 
 export default function CryptoPage() {
-    const [cryptos, setCryptos] = useState([]);
+    const [cryptos, setCryptos] = useState([])
 
     useEffect(() => {
         const fetchCryptos = async () => {
             try {
                 const response = await fetch('/api/cryptos', {
                     method: 'GET',
-                });
+                })
 
                 if (!response.ok) {
-                    throw new Error('Failed to fetch cryptos');
+                    throw new Error('Failed to fetch cryptos')
                 }
 
-                const data = await response.json();
-                console.log('Fetched cryptos:', data); 
-                setCryptos(data);
+                const data = await response.json()
+                console.log('Fetched cryptos:', data) 
+                setCryptos(data)
             } catch (error) {
-                console.error('Error fetching cryptos:', error);
+                console.error('Error fetching cryptos:', error)
             }
-        };
+        }
 
-        fetchCryptos();
-    }, []);
+        fetchCryptos()
+    }, [])
 
     return (
         <div className="container">
@@ -45,5 +45,5 @@ export default function CryptoPage() {
                 )}
             </div>
         </div>
-    );
+    )
 }

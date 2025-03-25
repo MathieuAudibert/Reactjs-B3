@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import { handleChange } from "next/form";
 import { useRouter } from "next/navigation"; 
 import "../../styles/globals.css";
 
@@ -18,7 +17,16 @@ export default function RegisterPage() {
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
-  }, []);
+  }, [])
+
+  
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "nom") setNom(value);
+    if (name === "prenom") setPrenom(value);
+    if (name === "email") setEmail(value);
+    if (name === "mdp") setMdp(value);
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
