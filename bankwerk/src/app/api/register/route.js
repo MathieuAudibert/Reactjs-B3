@@ -48,8 +48,10 @@ export async function POST(req) {
 
         const userRef = db.collection('Users').doc(user.uid);
         const userDoc = await userRef.get();
+        const userSolde = 0;
 
         await db.collection('Compte').doc(user.uid).set({
+            solde: userSolde,
             date_crea: createdDate,
             rib: rib
         });
