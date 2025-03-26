@@ -1,4 +1,4 @@
-import { db } from '../../../config/firebaseAdmin';
+import { db, FieldValue } from '../../../config/firebaseAdmin';
 
 export async function POST(req) {
     try {
@@ -23,10 +23,11 @@ export async function POST(req) {
             });
         }
 
-        const userRef = db.collection('Users').doc(uid);
-        await userRef.update({
-            rib_connus: db.FieldValue.arrayUnion(newRib)
-        });
+        const compteRef = db.collection('Compte').doc(uid);
+        
+        await compteRef.set({
+            rib_connus: FieldValue.arrayUnion(newRib)
+        }, { merge: true });
 
         return new Response(JSON.stringify({ 
             success: true,
