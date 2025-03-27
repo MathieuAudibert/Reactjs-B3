@@ -1,74 +1,74 @@
-"use client";
-import { useState, useEffect } from 'react';
-import "../../styles/globals.css";
+"use client"
+import { useState, useEffect } from 'react'
+import "../../styles/globals.css"
 
 export default function Transactions() {
-  const [userRib, setUserRib] = useState('');
-  const [knownRibs, setKnownRibs] = useState([]);
+  const [userRib, setUserRib] = useState('')
+  const [knownRibs, setKnownRibs] = useState([])
   const [formData, setFormData] = useState({
     rib_deb: '',
     rib_cible: '',
     montant: '',
     type: 'virement'
-  });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-  const [ribInputMode, setRibInputMode] = useState('select'); 
+  })
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
+  const [ribInputMode, setRibInputMode] = useState('select') 
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userString = localStorage.getItem('user');
-        const user = JSON.parse(userString);
-        const uid = user;
+        const userString = localStorage.getItem('user')
+        const user = JSON.parse(userString)
+        const uid = user
         
-        if (!uid) throw new Error('Utilisateur non connecté');
+        if (!uid) throw new Error('Utilisateur non connecté')
 
-        const response = await fetch(`/api/balance?uid=${uid}`);
-        if (!response.ok) throw new Error('Erreur lors de la récupération des données');
+        const response = await fetch(`/api/balance?uid=${uid}`)
+        if (!response.ok) throw new Error('Erreur lors de la récupération des données')
         
-        const data = await response.json();
-        setUserRib(data.rib);
-        setFormData(prev => ({ ...prev, rib_deb: data.rib }));
+        const data = await response.json()
+        setUserRib(data.rib)
+        setFormData(prev => ({ ...prev, rib_deb: data.rib }))
 
-        const knownRibsResponse = await fetch(`/api/ribs-connus?uid=${uid}`);
+        const knownRibsResponse = await fetch(`/api/ribs-connus?uid=${uid}`)
         if (knownRibsResponse.ok) {
-          const knownRibsData = await knownRibsResponse.json();
-          setKnownRibs(knownRibsData.ribs || []);
+          const knownRibsData = await knownRibsResponse.json()
+          setKnownRibs(knownRibsData.ribs || [])
         }
       } catch (err) {
-        console.error(err);
-        setError(err.message);
+        console.error(err)
+        setError(err.message)
       }
-    };
+    }
 
-    fetchUserData();
-  }, []);
+    fetchUserData()
+  }, [])
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData(prev => ({
       ...prev,
       [name]: value
-    }));
-  };
+    }))
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-    setSuccess('');
+    e.preventDefault()
+    setLoading(true)
+    setError('')
+    setSuccess('')
 
     try {
-      const ribCheckResponse = await fetch(`/api/check-rib?rib=${formData.rib_cible}`);
+      const ribCheckResponse = await fetch(`/api/check-rib?rib=${formData.rib_cible}`)
       if (!ribCheckResponse.ok) {
-        throw new Error('RIB bénéficiaire invalide');
+        throw new Error('RIB bénéficiaire invalide')
       }
 
-      const ribCheckData = await ribCheckResponse.json();
+      const ribCheckData = await ribCheckResponse.json()
       if (!ribCheckData.exists) {
-        throw new Error('Le RIB bénéficiaire n\'existe pas');
+        throw new Error('Le RIB bénéficiaire n\'existe pas')
       }
 
       const response = await fetch('/api/transactions', {
@@ -81,15 +81,15 @@ export default function Transactions() {
           montant: parseFloat(formData.montant),
           rib_deb: userRib 
         })
-      });
+      })
 
-      const data = await response.json();
-      const userString = localStorage.getItem('user');
-      const user = JSON.parse(userString);
-      const uid = user;
+      const data = await response.json()
+      const userString = localStorage.getItem('user')
+      const user = JSON.parse(userString)
+      const uid = user
       
       if (!response.ok) {
-        throw new Error(data.error || 'Erreur lors de la transaction');
+        throw new Error(data.error || 'Erreur lors de la transaction')
       }
 
       if (!knownRibs.some(rib => rib === formData.rib_cible)) {
@@ -102,22 +102,22 @@ export default function Transactions() {
             uid: uid,
             newRib: formData.rib_cible
           })
-        });
-        setKnownRibs(prev => [...prev, formData.rib_cible]);
+        })
+        setKnownRibs(prev => [...prev, formData.rib_cible])
       }
 
-      setSuccess('Transaction effectuée avec succès!');
+      setSuccess('Transaction effectuée avec succès!')
       setFormData(prev => ({
         ...prev,
         rib_cible: '',
         montant: ''
-      }));
+      }))
     } catch (err) {
-      setError(err.message);
+      setError(err.message)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <div className="container">
@@ -217,5 +217,5 @@ export default function Transactions() {
         </button>
       </form>
     </div>
-  );
+  )
 }

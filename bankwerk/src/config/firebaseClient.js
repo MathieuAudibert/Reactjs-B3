@@ -10,18 +10,18 @@ const firebaseConfig = {
   storageBucket: process.env.NEXT_PUBLIC_STORAGEBUCKET,
   messagingSenderId: process.env.NEXT_PUBLIC_MESSAGINGSENDERID,
   appId: process.env.NEXT_PUBLIC_APPID
-};
+}
 
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+const app = initializeApp(firebaseConfig)
+const auth = getAuth(app)
 
 async function getToken() {
-  const user = auth.currentUser;
+  const user = auth.currentUser
   if (user) {
-    return await user.getIdToken();
+    return await user.getIdToken()
   }
-  return null;
+  return null
 }
 
 module.exports = {
