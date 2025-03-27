@@ -1,50 +1,42 @@
-"use client";
-import { useState, useEffect } from "react";
-import { handleChange } from "next/form";
-import { useRouter } from "next/navigation"; 
-import "../../styles/globals.css";
+"use client"
+import { useState } from "react"
+import { useRouter } from "next/navigation" 
+import "../../styles/globals.css"
 
 export default function RegisterPage() {
-  const [nom, setNom] = useState("");
-  const [prenom, setPrenom] = useState("");
-  const [email, setEmail] = useState("");
-  const [mdp, setMdp] = useState("");
-  const [error, setError] = useState("");
-  const [user, setUser] = useState(null);
-  const router = useRouter();
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
+  const [nom, setNom] = useState("")
+  const [prenom, setPrenom] = useState("")
+  const [email, setEmail] = useState("")
+  const [mdp, setMdp] = useState("")
+  const [error, setError] = useState("")
+  const router = useRouter()
+  
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    if (name === "nom") setNom(value)
+    if (name === "prenom") setPrenom(value)
+    if (name === "email") setEmail(value)
+    if (name === "mdp") setMdp(value)
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
+    e.preventDefault()
+    setError("")
 
     const res = await fetch("/api/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ nom, prenom, email, mdp }),
-    });
+    })
 
-    const data = await res.json();
+    const data = await res.json()
 
-    if (res.ok) {
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify({ email: data.email, uid: data.uid }));
-      setUser({ email: data.email, uid: data.uid });
-      
-      router.push("/dashboard"); 
-      window.location.reload();
-    } else {
-      setError(data.error || "Une erreur est survenue.");
+    if (!res.ok) {
+      setError(data.error || "Une erreur est survenue.")
+      return 
     }
-  };
-
-
+    router.push("/login")
+  }
 
   return (
     <div className="container">

@@ -3,7 +3,7 @@ const { auth } = require('../../../config/firebaseClient');
 
 export async function POST(req) {
     try {
-        const { nom, email, mdp } = await req.json();
+        const { email, mdp } = await req.json();
 
         if (!email || !mdp) {
             return new Response(JSON.stringify({ error: 'Veuillez remplir tous les champs.' }), { status: 400 });
@@ -17,7 +17,7 @@ export async function POST(req) {
         const user = userCredential.user;
         const token = await user.getIdToken();
 
-        return new Response(JSON.stringify({ uid: user.uid, email: user.email, token }), { status: 200 });
+        return new Response(JSON.stringify({ uid: user.uid, email: user.email, token}), { status: 200 });
 
     } catch (error) {
         console.error(error);
