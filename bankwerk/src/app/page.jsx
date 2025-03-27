@@ -1,8 +1,8 @@
-import React from "react";
+import React from "react"
 
 export const metadata = {
   title: "BankWerk - Home",
-};
+}
 
 export default function Home() {
   return (
@@ -18,5 +18,5 @@ export default function Home() {
         </ul>
       </main>
     </React.Fragment>
-  );
+  )
 }

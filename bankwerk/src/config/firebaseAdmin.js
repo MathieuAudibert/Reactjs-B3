@@ -9,6 +9,7 @@ if (!admin.apps.length) {
 
 const auth = admin.auth()
 const db = admin.firestore()
+const FieldValue = admin.firestore.FieldValue
 
 async function verifyToken(req) {
   try {
@@ -24,5 +25,5 @@ async function verifyToken(req) {
 }
 
 
-module.exports = { auth, db, verifyToken }
+module.exports = { auth, db, verifyToken, FieldValue}
 
