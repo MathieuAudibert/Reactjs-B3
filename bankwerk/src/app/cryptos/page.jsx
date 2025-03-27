@@ -1,8 +1,11 @@
 "use client"
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function CryptoPage() {
     const [cryptos, setCryptos] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+    const router = useRouter()
 
     useEffect(() => {
         const fetchCryptos = async () => {
@@ -18,13 +21,29 @@ export default function CryptoPage() {
                 const data = await response.json()
                 console.log('Fetched cryptos:', data) 
                 setCryptos(data)
+                setIsLoading(false)
             } catch (error) {
                 console.error('Error fetching cryptos:', error)
+                setIsLoading(false)
             }
         }
 
         fetchCryptos()
     }, [])
+
+    const handleBuyClick = (cryptoId) => {
+        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+        
+        if (token) {
+            router.push(`/achat/${cryptoId}`)
+        } else {
+            router.push('/login')
+        }
+    }
+
+    if (isLoading) {
+        return <div className="container">Loading...</div>
+    }
 
     return (
         <div className="container">
@@ -38,10 +57,16 @@ export default function CryptoPage() {
                             <p>Prix: {crypto.prix}</p>
                             <p>Pourcentage 30j: {crypto.pourcent_30j}%</p>
                             <p>Dernière mise à jour: {new Date(crypto.derniere_update._seconds * 1000).toLocaleString()}</p>
+                            <button 
+                                onClick={() => handleBuyClick(crypto.id)}
+                                className="buy-button"
+                            >
+                                Acheter
+                            </button>
                         </div>
                     ))
                 ) : (
-                    <p>No cryptos found.</p>
+                    <p>Aucune crypto trouvée.</p>
                 )}
             </div>
         </div>
