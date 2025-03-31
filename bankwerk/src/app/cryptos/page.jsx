@@ -31,11 +31,11 @@ export default function CryptoPage() {
         fetchCryptos()
     }, [])
 
-    const handleBuyClick = (cryptoId) => {
+    const handleBuyClick = (cryptoSymbole) => {
         const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
         
         if (token) {
-            router.push(`/achat/${cryptoId}`)
+            router.push(`/transactions/cryptos/${cryptoSymbole}`)
         } else {
             router.push('/login')
         }
@@ -58,7 +58,7 @@ export default function CryptoPage() {
                             <p>Pourcentage 30j: {crypto.pourcent_30j}%</p>
                             <p>Dernière mise à jour: {new Date(crypto.derniere_update._seconds * 1000).toLocaleString()}</p>
                             <button 
-                                onClick={() => handleBuyClick(crypto.id)}
+                                onClick={() => handleBuyClick(crypto.symbole)}
                                 className="buy-button"
                             >
                                 Acheter
