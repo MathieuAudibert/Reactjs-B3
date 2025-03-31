@@ -93,7 +93,7 @@ export default function Transactions() {
       }
 
       if (!knownRibs.some(rib => rib === formData.rib_cible)) {
-        await fetch(`/api/add-known-rib`, {
+        await fetch(`/add-rib`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
