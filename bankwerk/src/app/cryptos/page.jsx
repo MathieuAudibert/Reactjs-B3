@@ -35,7 +35,7 @@ export default function CryptoPage() {
         const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
         
         if (token) {
-            router.push(`/transactions/cryptos/${cryptoSymbole}`)
+            router.push(`/cryptos/${cryptoSymbole}`)
         } else {
             router.push('/login')
         }

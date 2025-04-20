@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 
 export default function CryptoTransactionPage({ params }) {
     const router = useRouter()
-    const { symbole } = params
+    const symbole = params?.symbole
     const [crypto, setCrypto] = useState(null)
     const [transactionType, setTransactionType] = useState('achat')
     const [montant, setAmount] = useState('')
@@ -196,4 +196,4 @@ export default function CryptoTransactionPage({ params }) {
             </form>
         </div>
     )
-} 
+}

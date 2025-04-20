@@ -1,9 +1,9 @@
 import { db } from '../../../../config/firebaseAdmin'
-import { collection, query, where, getDocs, limit } from 'firebase/firestore'
 
 export async function GET(request, { params }) {
     try {
-        const { id: symbole } = params
+        const resolvedParams = await params
+        const symbole = resolvedParams.symbole
         
         if (!symbole) {
             return new Response(JSON.stringify({ error: 'Symbole manquant' }), {
@@ -13,15 +13,12 @@ export async function GET(request, { params }) {
                 }
             })
         }
-        
-        const cryptosRef = collection(db, 'Cryptos')
-        const q = query(
-            cryptosRef,
-            where('symbole', '==', symbole),
-            limit(1)
-        )
-        
-        const querySnapshot = await getDocs(q)
+
+        const cryptosRef = db.collection('Cryptos')
+        const querySnapshot = await cryptosRef
+            .where('symbole', '==', symbole)
+            .limit(1)
+            .get()
         
         if (querySnapshot.empty) {
             return new Response(JSON.stringify({ error: 'Crypto non trouvée' }), {
@@ -43,7 +40,7 @@ export async function GET(request, { params }) {
             }
         })
     } catch (error) {
-        console.error('Erreur API:', error)
+        console.error('Erreur API détaillée:', error.message, error.stack)
         return new Response(JSON.stringify({ error: 'Erreur serveur' }), {
             status: 500,
             headers: {
