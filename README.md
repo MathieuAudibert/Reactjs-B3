@@ -15,7 +15,7 @@
 * [x] Voir les cours de Cryptomonnaie (/cryptos)
   * [x] Back
   * [x] Front
-* [ ] Réaliser des virements entre deux comptes (/transfer)
+* [x] Réaliser des virements entre deux comptes (/transfer)
   * [x] Back
   * [x] Front
 * [ ] Réaliser des opérations de ventes/achats (/buy ou /transfer)
