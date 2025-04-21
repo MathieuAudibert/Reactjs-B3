@@ -33,11 +33,16 @@ export default function CryptoPage() {
                 {cryptos.length > 0 ? (
                     cryptos.map((crypto, index) => (
                         <div className="card" key={index}>
-                            <h2>{crypto.nom} ({crypto.symbole})</h2>
-                            <p>Rang: {crypto.rang}</p>
-                            <p>Prix: {crypto.prix}</p>
-                            <p>Pourcentage 30j: {crypto.pourcent_30j}%</p>
-                            <p>Dernière mise à jour: {new Date(crypto.derniere_update._seconds * 1000).toLocaleString()}</p>
+                            <div className="crypto-info">
+                                <h2>{crypto.nom} ({crypto.symbole})</h2>
+                                <p>Rang: {crypto.rang}</p>
+                            </div>
+                            
+                            <div className="crypto-stats">
+                                <p>Prix: {crypto.prix}</p>
+                                <p>Pourcentage 30j: {crypto.pourcent_30j}%</p>
+                                <p>Dernière mise à jour: {new Date(crypto.derniere_update._seconds * 1000).toLocaleString()}</p>
+                            </div>
                         </div>
                     ))
                 ) : (
