@@ -94,7 +94,7 @@ export default function Dashboard() {
         achats.map((log, index) => (
           <div key={index} className="timeline-item">
             <p>{convertTimestamp(log.date_transa)?.toLocaleString()}</p>
-            <p>{log.montant} € - {log.rib_deb} ➡ {log.rib_cible}</p>
+            <p>{log.montant} € - {log.rib_deb} ➢ {log.rib_cible}</p>
           </div>
         ))
       ) : (
@@ -108,7 +108,7 @@ export default function Dashboard() {
         ventes.map((log, index) => (
           <div key={index} className="timeline-item">
             <p>{convertTimestamp(log.date_transa)?.toLocaleString()}</p>
-            <p>{log.montant} € - {log.rib_deb} ➡ {log.rib_cible}</p>
+            <p>{log.montant} € - {log.rib_deb} ➢ {log.rib_cible}</p>
           </div>
         ))
       ) : (
@@ -123,6 +123,7 @@ export default function Dashboard() {
           <div key={index} className="timeline-item">
             <p>{convertTimestamp(log.date_transa)?.toLocaleString()}</p>
             <p>{log.type} - {log.montant} €</p>
+            <p>{log.rib_deb} ➢ {log.rib_cible}</p>
           </div>
         ))
       ) : (
