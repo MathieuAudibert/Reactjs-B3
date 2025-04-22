@@ -2,6 +2,13 @@
 import { useState, useEffect } from "react";
 import "../../styles/globals.css";
 
+const convertTimestamp = (timestamp) => {
+  if (timestamp && timestamp._seconds && timestamp._nanoseconds) {
+    return new Date(timestamp._seconds * 1000 + timestamp._nanoseconds / 1000000);
+  }
+  return null;
+};
+
 export default function Dashboard() {
   const [solde, setSolde] = useState(null);
   const [crypto, setCrypto] = useState([]);
@@ -89,11 +96,12 @@ export default function Dashboard() {
         {transactionLogs.length > 0 ? (
           transactionLogs.map((log, index) => (
             <li key={index} className="timeline-item">
-              <h3>{log.date}</h3>
+              <h3>{convertTimestamp(log.date_transa)?.toLocaleString()}</h3>
               <p>Type: {log.type}</p>
               <p>Montant: {log.montant} €</p>
               <p>RIB Débiteur: {log.rib_deb}</p>
               <p>RIB Créditeur: {log.rib_cible}</p>
+              <p>Statut: {log.statut}</p>
             </li>
           ))
         ) : (
