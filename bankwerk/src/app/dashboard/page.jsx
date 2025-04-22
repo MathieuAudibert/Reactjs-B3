@@ -101,7 +101,13 @@ export default function Dashboard() {
               <p>Montant: {log.montant} €</p>
               <p>RIB Débiteur: {log.rib_deb}</p>
               <p>RIB Créditeur: {log.rib_cible}</p>
-              <p>Statut: {log.statut}</p>
+              <div>
+                <h4>Détails:</h4>
+                <p>ID Crypto: {log.details?.id_crypto}</p>
+                <p>Nombre Crypto: {log.details?.nombre_crypto}</p>
+                <p>Prix Unité Crypto: {log.details?.prix_unite_crypto} €</p>
+                <p>Symbole Crypto: {log.details?.symbole_crypto}</p>
+              </div>
             </li>
           ))
         ) : (
