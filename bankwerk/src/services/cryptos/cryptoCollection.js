@@ -37,6 +37,6 @@ async function updateCryptoCollection() {
     console.log('Collection mise à jour')
 }
 
-setInterval(updateCryptoCollection, 15 * 60 * 1000) // 15min pour chaque mise à jour
-
+//setInterval(updateCryptoCollection, 15 * 60 * 1000) // 15min 
+setInterval(updateCryptoCollection, 1 * 60 * 1000) // 1mn 
 updateCryptoCollection()
