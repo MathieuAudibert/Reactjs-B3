@@ -33,7 +33,7 @@ export default function Dashboard() {
         if (!response.ok) throw new Error("Erreur de récupération des données");
 
         const data = await response.json();
-        console.log("🧾 Transaction types:", data.transaction_log.map(t => t.type)); // AJOUT ICI ✅
+        console.log("🧾 Transaction types:", data.transaction_log.map(t => t.type));
 
         setSolde(data.solde);
         setCrypto(data.crypto || []);
