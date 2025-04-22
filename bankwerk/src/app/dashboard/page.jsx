@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { CaretDown, CaretUp } from '@phosphor-icons/react';
 import "../../styles/globals.css";
 
 const convertTimestamp = (timestamp) => {
@@ -15,6 +16,9 @@ export default function Dashboard() {
   const [transactionLogs, setTransactionLogs] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showMoreAchats, setShowMoreAchats] = useState(false);
+  const [showMoreVentes, setShowMoreVentes] = useState(false);
+  const [showMoreAutres, setShowMoreAutres] = useState(false);
 
   useEffect(() => {
     const fetchSolde = async () => {
@@ -69,69 +73,71 @@ export default function Dashboard() {
     const type = normalizeType(t.type);
     return !type.includes("achat") && !type.includes("vente");
   });
-  
-  
+
+  const renderItems = (items, showMore, setShowMore) => {
+    const limitedItems = showMore ? items : items.slice(0, 10);
+    return (
+      <>
+        {limitedItems.map((log, index) => (
+          <div key={index} className="timeline-item">
+            <p>{convertTimestamp(log.date_transa)?.toLocaleString()}</p>
+            <p>{log.montant}€ - {log.rib_deb} ➢ {log.rib_cible}</p>
+            {log.type && <p>{log.type}</p>}
+          </div>
+        ))}
+        {items.length > 10 && (
+          <button onClick={() => setShowMore(!showMore)} className="show-more-button">
+            {showMore ? <CaretUp size={24} /> : <CaretDown size={24} />}
+          </button>
+        )}
+      </>
+    );
+  };
+
   return (
-<div className="dashboard-container">
-  <div className="dashboard-top">
-    <h1>Tableau de Bord</h1>
-    <p><strong>Solde :</strong> {solde} €</p>
-    <div className="crypto-list">
-      {crypto.length > 0 ? (
-        crypto.map((item, index) => (
-          <span key={index}>{item.nom} : {item.quantite}</span>
-        ))
-      ) : (
-        <p>Rien</p>
-      )}
-    </div>
-  </div>
+    <div className="dashboard-container">
+      <div className="dashboard-top">
+        <h1>Tableau de Bord</h1>
+        <p><strong>Solde :</strong> {solde} €</p>
+        <div className="crypto-list">
+          {crypto.length > 0 ? (
+            crypto.map((item, index) => (
+              <span key={index}>{item.nom} : {item.quantite}</span>
+            ))
+          ) : (
+            <p>Rien</p>
+          )}
+        </div>
+      </div>
 
-  <div className="dashboard-bottom">
-    <div className="dashboard-block">
-      <h2>📥 Achats</h2>
-      {achats.length > 0 ? (
-        achats.map((log, index) => (
-          <div key={index} className="timeline-item">
-            <p>{convertTimestamp(log.date_transa)?.toLocaleString()}</p>
-            <p>{log.montant} € - {log.rib_deb} ➢ {log.rib_cible}</p>
-          </div>
-        ))
-      ) : (
-        <p>Rien</p>
-      )}
-    </div>
+      <div className="dashboard-bottom">
+        <div className="dashboard-block">
+          <h2>📥 Achats (Cryptos)</h2>
+          {achats.length > 0 ? (
+            renderItems(achats, showMoreAchats, setShowMoreAchats)
+          ) : (
+            <p>Rien</p>
+          )}
+        </div>
 
-    <div className="dashboard-block">
-      <h2>📤 Ventes</h2>
-      {ventes.length > 0 ? (
-        ventes.map((log, index) => (
-          <div key={index} className="timeline-item">
-            <p>{convertTimestamp(log.date_transa)?.toLocaleString()}</p>
-            <p>{log.montant} € - {log.rib_deb} ➢ {log.rib_cible}</p>
-          </div>
-        ))
-      ) : (
-        <p>Rien</p>
-      )}
-    </div>
+        <div className="dashboard-block">
+          <h2>📤 Ventes (Cryptos)</h2>
+          {ventes.length > 0 ? (
+            renderItems(ventes, showMoreVentes, setShowMoreVentes)
+          ) : (
+            <p>Rien</p>
+          )}
+        </div>
 
-    <div className="dashboard-block">
-      <h2>🧾 Autres</h2>
-      {autres.length > 0 ? (
-        autres.map((log, index) => (
-          <div key={index} className="timeline-item">
-            <p>{convertTimestamp(log.date_transa)?.toLocaleString()}</p>
-            <p>{log.type} - {log.montant} €</p>
-            <p>{log.rib_deb} ➢ {log.rib_cible}</p>
-          </div>
-        ))
-      ) : (
-        <p>Rien</p>
-      )}
+        <div className="dashboard-block">
+          <h2>🧾 Autres</h2>
+          {autres.length > 0 ? (
+            renderItems(autres, showMoreAutres, setShowMoreAutres)
+          ) : (
+            <p>Rien</p>
+          )}
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
   );
 }
