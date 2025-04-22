@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react"
-import { useRouter } from "next/navigation" 
+import { useRouter } from "next/navigation"
 import "../../styles/globals.css"
 
 export default function RegisterPage() {
@@ -10,14 +10,6 @@ export default function RegisterPage() {
   const [mdp, setMdp] = useState("")
   const [error, setError] = useState("")
   const router = useRouter()
-  
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    if (name === "nom") setNom(value)
-    if (name === "prenom") setPrenom(value)
-    if (name === "email") setEmail(value)
-    if (name === "mdp") setMdp(value)
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -30,26 +22,55 @@ export default function RegisterPage() {
     })
 
     const data = await res.json()
-
     if (!res.ok) {
       setError(data.error || "Une erreur est survenue.")
-      return 
+      return
     }
+
     router.push("/login")
   }
 
   return (
-    <div className="container">
-      <h1>Inscription</h1>
-      <form onSubmit={handleSubmit} className="form">
-        <input type="text" placeholder="Nom" name="nom" onChange={handleChange} required />
-        <input type="text" placeholder="Prénom" name="prenom" onChange={handleChange} required />
-        <input type="email" placeholder="Email" name="email" onChange={handleChange} required />
-        <input type="password" placeholder="Mot de passe" name="mdp" onChange={handleChange} required />
-        <p>Mot de passe oublié ?</p>
-        <button type="submit">S'inscrire</button>
-        <p>Déjà un compte ? Connectez-vous ici.</p>
-      </form>
+    <div className="auth-container">
+      <div className="form-side">
+        <h1>Inscription</h1>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Nom"
+            value={nom}
+            onChange={(e) => setNom(e.target.value)}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Prénom"
+            value={prenom}
+            onChange={(e) => setPrenom(e.target.value)}
+            required
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Mot de passe"
+            value={mdp}
+            onChange={(e) => setMdp(e.target.value)}
+            required
+          />
+          <button type="submit">S'inscrire</button>
+          {error && <p className="error">{error}</p>}
+          <p className="auth-link">
+            Déjà un compte ? <a href="/login">Connectez-vous ici</a>
+          </p>
+        </form>
+      </div>
+      <div className="image-side"></div>
     </div>
   )
 }
