@@ -88,8 +88,8 @@ export default function CryptoTransactionPage({ params }) {
         try {
             const endpoint = transactionType === 'achat'
                 ? `/api/cryptos/${crypto.symbole}/achat`
-                : '/api/cryptos/vente'
-
+                : `/api/cryptos/${crypto.symbole}/vente`
+                
             const userString = localStorage.getItem('user')
             const uid = JSON.parse(userString)
 

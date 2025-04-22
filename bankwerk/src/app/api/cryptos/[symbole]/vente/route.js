@@ -38,6 +38,13 @@ export async function POST(request, { params }) {
         const compteDoc = compteSnapshot.docs[0];
         const compteData = compteDoc.data();
 
+        if (compteData.cryptos.quantite < quantite) {
+            return new Response(JSON.stringify({ error: 'Pas assez de crypto' }), {
+                status: 400,
+                headers: { 'Content-Type': 'application/json' }
+            });
+        }
+
         const cryptosSnapshot = await db.collection('Crypto')
             .where('symbole', '==', symbole)
             .limit(1)
@@ -64,27 +71,24 @@ export async function POST(request, { params }) {
             });
         }
 
-        let cryptosPossedees = compteData.cryptos || [];
-        const cryptoExistanteIndex = cryptosPossedees.findIndex(c => c.symbole === symbole);
-
-        if (cryptoExistanteIndex === -1 || cryptosPossedees[cryptoExistanteIndex].quantite < quantiteNum) {
-            return new Response(JSON.stringify({ error: 'Quantité de cryptos insuffisante' }), {
-                status: 400,
-                headers: { 'Content-Type': 'application/json' }
-            });
-        }
-
         const batch = db.batch();
 
         batch.update(compteDoc.ref, {
             solde: parseFloat((compteData.solde + montantNum).toFixed(2))
         });
 
-        cryptosPossedees[cryptoExistanteIndex].quantite =
-            parseFloat((parseFloat(cryptosPossedees[cryptoExistanteIndex].quantite) - quantiteNum).toFixed(8));
+        let cryptosPossedees = compteData.cryptos || [];
+        const cryptoExistanteIndex = cryptosPossedees.findIndex(c => c.symbole === symbole);
 
-        if (cryptosPossedees[cryptoExistanteIndex].quantite === 0) {
-            cryptosPossedees.splice(cryptoExistanteIndex, 1);
+        if (cryptoExistanteIndex >= 0) {
+            cryptosPossedees[cryptoExistanteIndex].quantite =
+                parseFloat((parseFloat(cryptosPossedees[cryptoExistanteIndex].quantite) - quantiteNum).toFixed(8));
+        } else {
+            cryptosPossedees.push({
+                symbole,
+                quantite: quantiteNum,
+                nom: cryptoData.nom
+            });
         }
 
         batch.update(compteDoc.ref, { cryptos: cryptosPossedees });
@@ -92,7 +96,7 @@ export async function POST(request, { params }) {
         const transactionRef = db.collection('Transactions').doc();
         batch.set(transactionRef, {
             rib_cible: rib,
-            rib_deb: "BWK92-00000000", 
+            rib_deb: "BWK92-00000000",
             id_compte: compteDoc.id,
             date_transa: new Date(),
             montant: montantNum,
@@ -109,14 +113,14 @@ export async function POST(request, { params }) {
         await batch.commit();
 
         return new Response(JSON.stringify({
-            message: `Vente de ${quantiteNum} ${symbole} effectuée avec succès`
+            message: `Vente de ${quantiteNum} ${symbole} effectué avec succès`
         }), {
             status: 200,
             headers: { 'Content-Type': 'application/json' }
         });
 
     } catch (error) {
-        console.error('Erreur lors de la vente:', error);
+        console.error('Erreur lors de l\'achat:', error);
         return new Response(JSON.stringify({ error: 'Erreur serveur' }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' }
