@@ -4,29 +4,60 @@ import { useRouter } from 'next/navigation'
 
 export default function CryptoTransactionPage({ params }) {
     const router = useRouter()
-    const symbole = params?.symbole
+    const { symbole } = params || {}
     const [crypto, setCrypto] = useState(null)
     const [transactionType, setTransactionType] = useState('achat')
     const [montant, setAmount] = useState('')
     const [quantite, setQuantity] = useState('')
-    const [rib, setRib] = useState('')
+    const [userRib, setUserRib] = useState('')
     const [loading, setLoading] = useState(true)
+    const [ribLoading, setRibLoading] = useState(true)
     const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
 
     useEffect(() => {
+        const fetchUserRib = async () => {
+            try {
+                const userString = localStorage.getItem('user')
+                const uid = JSON.parse(userString)
+
+                if (!uid) throw new Error('Utilisateur non connecté')
+
+                const response = await fetch(`/api/balance?uid=${uid}`)
+                if (!response.ok) throw new Error('Erreur lors de la récupération des données utilisateur')
+
+                const data = await response.json()
+                setUserRib(data.rib)
+            } catch (err) {
+                console.error('Fetch RIB error:', err)
+                setError(err.message || 'Erreur de récupération du RIB')
+            } finally {
+                setRibLoading(false)
+            }
+        }
+
+        fetchUserRib()
+    }, [])
+
+    useEffect(() => {
         const fetchCrypto = async () => {
+            if (!symbole) {
+                setError('Symbole de crypto manquant')
+                setLoading(false)
+                return
+            }
+            
             try {
                 const res = await fetch(`/api/cryptos/${symbole}`)
                 if (!res.ok) {
                     throw new Error('Erreur de récupération')
                 }
                 const data = await res.json()
-                
+
                 if (!data.symbole || !data.prix) {
                     throw new Error('Données de crypto invalides')
                 }
-                
+
                 setCrypto(data)
             } catch (err) {
                 console.error('Fetch error:', err)
@@ -35,13 +66,8 @@ export default function CryptoTransactionPage({ params }) {
                 setLoading(false)
             }
         }
-    
-        if (symbole) { 
-            fetchCrypto()
-        } else {
-            setError('Symbole de crypto manquant')
-            setLoading(false)
-        }
+
+        fetchCrypto()
     }, [symbole])
 
     const handleSubmit = async (e) => {
@@ -54,28 +80,37 @@ export default function CryptoTransactionPage({ params }) {
             return
         }
 
+        if (!userRib) {
+            setError('RIB utilisateur non disponible')
+            return
+        }
+
         try {
-            const endpoint = transactionType === 'achat' 
-                ? '/api/cryptos/achat' 
+            const endpoint = transactionType === 'achat'
+                ? `/api/cryptos/${crypto.symbole}/achat`
                 : '/api/cryptos/vente'
-            
+
+            const userString = localStorage.getItem('user')
+            const uid = JSON.parse(userString)
+
             const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    symbole: crypto.symbole, 
+                    symbole: crypto.symbole,
                     montant,
                     quantite,
-                    rib
+                    rib: userRib,
+                    uid
                 })
             })
 
             const data = await response.json()
-            
+
             if (!response.ok) throw new Error(data.error || 'Erreur de transaction')
-            
+
             setSuccess(data.message)
             setTimeout(() => router.push('/dashboard'), 2000)
         } catch (err) {
@@ -83,7 +118,7 @@ export default function CryptoTransactionPage({ params }) {
         }
     }
 
-    if (loading) return <div className="loading">Chargement...</div>
+    if (loading || ribLoading) return <div className="loading">Chargement...</div>
     if (!crypto) return <div className="error">Cryptomonnaie non trouvée</div>
 
     return (
@@ -91,7 +126,7 @@ export default function CryptoTransactionPage({ params }) {
             <h1 className="title">
                 {transactionType === 'achat' ? 'Acheter' : 'Vendre'} {crypto.nom} ({crypto.symbole})
             </h1>
-            
+
             <div className="crypto-info">
                 <div className="info-row">
                     <span className="label">Prix actuel:</span>
@@ -128,15 +163,13 @@ export default function CryptoTransactionPage({ params }) {
 
             <form onSubmit={handleSubmit} className="transaction-form">
                 <div className="form-group">
-                    <label htmlFor="rib" className="form-label">RIB:</label>
+                    <label htmlFor="rib" className="form-label">Votre RIB:</label>
                     <input
                         id="rib"
                         type="text"
-                        value={rib}
-                        onChange={(e) => setRib(e.target.value)}
-                        placeholder="Entrez votre RIB"
-                        className="form-input"
-                        required
+                        value={userRib}
+                        className="form-input read-only-input"
+                        readOnly
                     />
                 </div>
 
@@ -182,8 +215,8 @@ export default function CryptoTransactionPage({ params }) {
                     <button type="submit" className="submit-btn">
                         {transactionType === 'achat' ? 'Acheter' : 'Vendre'} {crypto.symbole}
                     </button>
-                    <button 
-                        type="button" 
+                    <button
+                        type="button"
                         className="cancel-btn"
                         onClick={() => router.back()}
                     >

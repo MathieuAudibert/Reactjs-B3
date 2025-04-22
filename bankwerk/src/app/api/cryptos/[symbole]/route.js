@@ -14,7 +14,7 @@ export async function GET(request, { params }) {
             })
         }
 
-        const cryptosRef = db.collection('Cryptos')
+        const cryptosRef = db.collection('Crypto')
         const querySnapshot = await cryptosRef
             .where('symbole', '==', symbole)
             .limit(1)
