@@ -97,7 +97,7 @@ export default function Dashboard() {
             </li>
           ))
         ) : (
-          <p>Aucune transaction trouvée</p>
+          <p>Rien</p>
         )}
       </ul>
     </div>
