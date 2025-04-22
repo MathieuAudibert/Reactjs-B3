@@ -19,7 +19,7 @@
   * [x] Back
   * [x] Front
 * [ ] Réaliser des opérations de ventes/achats (/buy ou /transfer)
-  * [ ] Back
+  * [x] Back
   * [ ] Front
 * [ ] Design UI 
 
