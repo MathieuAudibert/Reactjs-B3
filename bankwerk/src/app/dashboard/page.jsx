@@ -19,6 +19,7 @@ export default function Dashboard() {
   const [showMoreAchats, setShowMoreAchats] = useState(false);
   const [showMoreVentes, setShowMoreVentes] = useState(false);
   const [showMoreAutres, setShowMoreAutres] = useState(false);
+  const [rib, setRib] = useState(null);
 
   useEffect(() => {
     const fetchSolde = async () => {
@@ -45,9 +46,11 @@ export default function Dashboard() {
 
         const data = await response.json();
         console.log("🧾 Transaction types:", data.transaction_log.map(t => t.type));
+        console.log("tab", data.transaction_log)
 
         setSolde(data.solde);
         setCrypto(data.crypto || []);
+        setRib(data.rib);
         setTransactionLogs(data.transaction_log || []);
         setIsLoggedIn(true);
       } catch (error) {
@@ -81,15 +84,27 @@ export default function Dashboard() {
     return !type.includes("achat") && !type.includes("vente");
   });
 
-  const renderItems = (items, showMore, setShowMore) => {
-    const limitedItems = showMore ? items : items.slice(0, 10);
+  const renderItems = (items, showMore, setShowMore, isAchatVente = false) => {
+    const limitedItems = showMore ? items : items.slice(0, 4);
     return (
       <>
         {limitedItems.map((log, index) => (
           <div key={index} className="timeline-item">
             <p>{convertTimestamp(log.date_transa)?.toLocaleString()}</p>
-            <p>{log.montant}€ - {log.rib_deb} ➢ {log.rib_cible}</p>
-            {log.type && <p>{log.type}</p>}
+            {isAchatVente ? (
+              <>
+                <h1>{log.details.symbole_crypto}</h1>
+                <p><b>Montant/Unités: </b>{log.montant} <b style={{ color: "green" }}>€</b> - {log.details.nombre_crypto} <b style={{ color: "green" }}>{log.details.symbole_crypto}</b></p>
+                <p><b>Prix unités: </b>{log.details.prix_unite_crypto} <b style={{ color: "green" }}>€</b></p>
+              </>
+            ) : (
+              <>
+                <h1 style={{ color: log.rib_cible === rib ? "green" : "red" }}>{log.montant}€</h1>
+                <p><b>De: </b>{log.rib_deb === rib ? "Vous" : log.rib_deb}</p>
+                <p><b>Pour: </b>{log.rib_cible === rib ? "Vous" : log.rib_deb}</p>
+                {log.type && <p><b>Type: </b>{log.type}</p>}
+              </>
+            )}
           </div>
         ))}
         {items.length > 10 && (
@@ -100,16 +115,17 @@ export default function Dashboard() {
       </>
     );
   };
+  
 
   return (
     <div className="dashboard-container">
       <div className="dashboard-top">
         <h1>Tableau de Bord</h1>
-        <p><strong>Solde :</strong> {solde} €</p>
+        <p><strong>Solde :</strong> {solde} <b style={{ color: "green" }}>€</b></p>
         <div className="crypto-list">
           {crypto.length > 0 ? (
             crypto.map((item, index) => (
-              <span key={index}>{item.nom} : {item.quantite}</span>
+              <span key={index}><strong>{item.nom} :</strong> {item.quantite} <b style={{ color: "green" }}>{item.symbole}</b></span>
             ))
           ) : (
             <p>Rien</p>
@@ -119,18 +135,18 @@ export default function Dashboard() {
 
       <div className="dashboard-bottom">
         <div className="dashboard-block">
-          <h2>📥 Achats (Cryptos)</h2>
+          <h2 style={{ color: "red" }}>📥 Achats (Cryptos)</h2>
           {achats.length > 0 ? (
-            renderItems(achats, showMoreAchats, setShowMoreAchats)
+            renderItems(achats, showMoreAchats, setShowMoreAchats, true)
           ) : (
             <p>Rien</p>
           )}
         </div>
 
         <div className="dashboard-block">
-          <h2>📤 Ventes (Cryptos)</h2>
+          <h2 style={{ color: "green" }}>📤 Ventes (Cryptos)</h2>
           {ventes.length > 0 ? (
-            renderItems(ventes, showMoreVentes, setShowMoreVentes)
+            renderItems(ventes, showMoreVentes, setShowMoreVentes, true)
           ) : (
             <p>Rien</p>
           )}
@@ -139,7 +155,7 @@ export default function Dashboard() {
         <div className="dashboard-block">
           <h2>🧾 Autres</h2>
           {autres.length > 0 ? (
-            renderItems(autres, showMoreAutres, setShowMoreAutres)
+            renderItems(autres, showMoreAutres, setShowMoreAutres, false)
           ) : (
             <p>Rien</p>
           )}
