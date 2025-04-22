@@ -1,0 +1,16 @@
+services:
+  frontend: 
+    image: nginx:latest
+    container_name: docker-nginx
+    ports:
+      - '80:80'
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: docker-next
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app
+      - /app/node_modules
