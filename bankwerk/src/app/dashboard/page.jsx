@@ -73,7 +73,6 @@ export default function Dashboard() {
   
   return (
 <div className="dashboard-container">
-  {/* Bloc principal en haut */}
   <div className="dashboard-top">
     <h1>Tableau de Bord</h1>
     <p><strong>Solde :</strong> {solde} €</p>
@@ -83,12 +82,11 @@ export default function Dashboard() {
           <span key={index}>{item.nom} : {item.quantite}</span>
         ))
       ) : (
-        <p>Aucune cryptomonnaie</p>
+        <p>Rien</p>
       )}
     </div>
   </div>
 
-  {/* Trois blocs en bas */}
   <div className="dashboard-bottom">
     <div className="dashboard-block">
       <h2>📥 Achats</h2>
@@ -100,7 +98,7 @@ export default function Dashboard() {
           </div>
         ))
       ) : (
-        <p>Aucun achat</p>
+        <p>Rien</p>
       )}
     </div>
 
@@ -114,7 +112,7 @@ export default function Dashboard() {
           </div>
         ))
       ) : (
-        <p>Aucune vente</p>
+        <p>Rien</p>
       )}
     </div>
 
@@ -128,7 +126,7 @@ export default function Dashboard() {
           </div>
         ))
       ) : (
-        <p>Aucune autre transaction</p>
+        <p>Rien</p>
       )}
     </div>
   </div>
