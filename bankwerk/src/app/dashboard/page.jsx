@@ -23,9 +23,16 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchSolde = async () => {
       try {
-        const userString = localStorage.getItem("user");
-        const user = userString ? JSON.parse(userString) : null;
-        const uid = user?.uid;
+        const userString = localStorage.getItem('user');
+
+        if (!userString) {
+          setIsLoggedIn(false);
+          setLoading(false);
+          return;
+        }
+
+        const user = JSON.parse(userString);
+        const uid = user;
 
         if (!uid) {
           setIsLoggedIn(false);
