@@ -9,29 +9,29 @@ export default function CryptoPage() {
     const [isButtonDisabled, setIsButtonDisabled] = useState(false)
     const router = useRouter()
 
-    useEffect(() => {
-        const fetchCryptos = async () => {
-            try {
-                const response = await fetch('/api/cryptos', {
-                    method: 'GET',
-                })
+    const fetchCryptos = async () => {
+        try {
+            const response = await fetch('/api/cryptos', {
+                method: 'GET',
+            })
 
-                if (!response.ok) {
-                    throw new Error('Failed to fetch cryptos')
-                }
-
-                const data = await response.json()
-                console.log('Fetched cryptos:', data)
-                setCryptos(data)
-                setIsLoading(false)
-                setTimer(60) 
-                setIsButtonDisabled(true) 
-            } catch (error) {
-                console.error('Error fetching cryptos:', error)
-                setIsLoading(false)
+            if (!response.ok) {
+                throw new Error('Failed to fetch cryptos')
             }
-        }
 
+            const data = await response.json()
+            console.log('Fetched cryptos:', data)
+            setCryptos(data)
+            setIsLoading(false)
+            setTimer(60)
+            setIsButtonDisabled(true)
+        } catch (error) {
+            console.error('Error fetching cryptos:', error)
+            setIsLoading(false)
+        }
+    }
+
+    useEffect(() => {
         fetchCryptos()
 
         const interval = setInterval(() => {
@@ -40,7 +40,7 @@ export default function CryptoPage() {
                     return prevTimer - 1
                 } else {
                     clearInterval(interval)
-                    setIsButtonDisabled(false) 
+                    setIsButtonDisabled(false)
                     return 0
                 }
             })
