@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 export default function Header() {
     const router = useRouter();
     const [isConnected, setIsConnected] = useState(false);
-
+    
     useEffect(() => {
         const handleStorageChange = () => {
             setIsConnected(!!localStorage.getItem("token"));
@@ -42,9 +42,6 @@ export default function Header() {
                     </li>
                     <li>
                         <Link href="/cryptos">Cryptomonnaies</Link>
-                    </li>
-                    <li>
-                        <Link href="/buy">Acheter/Vendre</Link>
                     </li>
                     <li>
                         <button onClick={logout} className="btn-blueDark">Déconnexion</button>
