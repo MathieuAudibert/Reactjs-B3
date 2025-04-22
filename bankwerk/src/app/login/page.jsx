@@ -24,7 +24,7 @@ export default function LoginPage() {
       if (!res.ok) throw new Error(data.error || "Identifiants incorrects.")
 
       localStorage.setItem("token", data.token)
-      localStorage.setItem("user", JSON.stringify(data.uid))
+      localStorage.setItem("user", JSON.stringify({ uid: data.uid, email: data.email })) // ✅ corrigé
 
       router.push("/")
       window.location.reload()
@@ -62,5 +62,4 @@ export default function LoginPage() {
       <div className="image-side"></div>
     </div>
   )
-  
 }

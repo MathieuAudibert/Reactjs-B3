@@ -537,3 +537,72 @@ p {
   text-align: right;
   font-weight: 500;
 }
+
+
+/* Dashboard */
+.dashboard-container {
+  padding: 2rem;
+  font-family: 'Poppins', sans-serif;
+  background-color: #fff;
+  color: #111;
+}
+
+/* Bloc du haut */
+.dashboard-top {
+  background-color: #f7f7f7;
+  border: 1px solid #e0e0e0;
+  padding: 2rem;
+  border-radius: 10px;
+  margin-bottom: 3rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.crypto-list {
+  margin-top: 1rem;
+  color: #333;
+  font-size: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Trois blocs du bas */
+.dashboard-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+.dashboard-block {
+  flex: 1;
+  min-width: 280px;
+  background-color: #fafafa;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+
+.dashboard-block h2 {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.5rem;
+  color: #222;
+}
+
+.timeline-item {
+  background-color: #f0f0f0;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border-radius: 5px;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+@media (max-width: 992px) {
+  .dashboard-bottom {
+    flex-direction: column;
+  }
+}

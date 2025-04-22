@@ -19,16 +19,9 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchSolde = async () => {
       try {
-        const userString = localStorage.getItem('user');
-
-        if (!userString) {
-          setIsLoggedIn(false);
-          setLoading(false);
-          return;
-        }
-
-        const user = JSON.parse(userString);
-        const uid = user;
+        const userString = localStorage.getItem("user");
+        const user = userString ? JSON.parse(userString) : null;
+        const uid = user?.uid;
 
         if (!uid) {
           setIsLoggedIn(false);
@@ -36,22 +29,18 @@ export default function Dashboard() {
           return;
         }
 
-        const response = await fetch(`/api/balance?uid=${uid}`, {
-          method: "GET",
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch balance");
-        }
+        const response = await fetch(`/api/balance?uid=${uid}`);
+        if (!response.ok) throw new Error("Erreur de récupération des données");
 
         const data = await response.json();
-        console.log("Fetched balance:", data);
+        console.log("🧾 Transaction types:", data.transaction_log.map(t => t.type)); // AJOUT ICI ✅
+
         setSolde(data.solde);
         setCrypto(data.crypto || []);
         setTransactionLogs(data.transaction_log || []);
         setIsLoggedIn(true);
       } catch (error) {
-        console.error("Error fetching balance:", error);
+        console.error("❌ Erreur dans fetchSolde:", error);
         setIsLoggedIn(false);
       } finally {
         setLoading(false);
@@ -61,9 +50,7 @@ export default function Dashboard() {
     fetchSolde();
   }, []);
 
-  if (loading) {
-    return <div>Chargement...</div>;
-  }
+  if (loading) return <div>Chargement...</div>;
 
   if (!isLoggedIn) {
     return (
@@ -74,46 +61,78 @@ export default function Dashboard() {
     );
   }
 
-  return (
-    <div className="container">
-      <h1>Tableau de Bord</h1>
-      <p>Votre solde : {solde} €</p>
-      <h2>CryptoMonnaies</h2>
-      <ul className="crypto-list">
-        {crypto.length > 0 ? (
-          crypto.map((item, index) => (
-            <li key={index} className="crypto-item">
-              <h3>{item.nom} : {item.quantite}</h3>
-            </li>
-          ))
-        ) : (
-          <p>Rien</p>
-        )}
-      </ul>
+  const normalizeType = (type) => type?.toLowerCase().trim();
 
-      <h2>Historique des Transactions</h2>
-      <ul className="timeline">
-        {transactionLogs.length > 0 ? (
-          transactionLogs.map((log, index) => (
-            <li key={index} className="timeline-item">
-              <h3>{convertTimestamp(log.date_transa)?.toLocaleString()}</h3>
-              <p>Type: {log.type}</p>
-              <p>Montant: {log.montant} €</p>
-              <p>RIB Débiteur: {log.rib_deb}</p>
-              <p>RIB Créditeur: {log.rib_cible}</p>
-              <div>
-                <h4>Détails:</h4>
-                <p>ID Crypto: {log.details?.id_crypto}</p>
-                <p>Nombre Crypto: {log.details?.nombre_crypto}</p>
-                <p>Prix Unité Crypto: {log.details?.prix_unite_crypto} €</p>
-                <p>Symbole Crypto: {log.details?.symbole_crypto}</p>
-              </div>
-            </li>
-          ))
-        ) : (
-          <p>Rien</p>
-        )}
-      </ul>
+  const achats = transactionLogs.filter(t => normalizeType(t.type).includes("achat"));
+  const ventes = transactionLogs.filter(t => normalizeType(t.type).includes("vente"));
+  const autres = transactionLogs.filter(t => {
+    const type = normalizeType(t.type);
+    return !type.includes("achat") && !type.includes("vente");
+  });
+  
+  
+  return (
+<div className="dashboard-container">
+  {/* Bloc principal en haut */}
+  <div className="dashboard-top">
+    <h1>Tableau de Bord</h1>
+    <p><strong>Solde :</strong> {solde} €</p>
+    <div className="crypto-list">
+      {crypto.length > 0 ? (
+        crypto.map((item, index) => (
+          <span key={index}>{item.nom} : {item.quantite}</span>
+        ))
+      ) : (
+        <p>Aucune cryptomonnaie</p>
+      )}
     </div>
+  </div>
+
+  {/* Trois blocs en bas */}
+  <div className="dashboard-bottom">
+    <div className="dashboard-block">
+      <h2>📥 Achats</h2>
+      {achats.length > 0 ? (
+        achats.map((log, index) => (
+          <div key={index} className="timeline-item">
+            <p>{convertTimestamp(log.date_transa)?.toLocaleString()}</p>
+            <p>{log.montant} € - {log.rib_deb} ➡ {log.rib_cible}</p>
+          </div>
+        ))
+      ) : (
+        <p>Aucun achat</p>
+      )}
+    </div>
+
+    <div className="dashboard-block">
+      <h2>📤 Ventes</h2>
+      {ventes.length > 0 ? (
+        ventes.map((log, index) => (
+          <div key={index} className="timeline-item">
+            <p>{convertTimestamp(log.date_transa)?.toLocaleString()}</p>
+            <p>{log.montant} € - {log.rib_deb} ➡ {log.rib_cible}</p>
+          </div>
+        ))
+      ) : (
+        <p>Aucune vente</p>
+      )}
+    </div>
+
+    <div className="dashboard-block">
+      <h2>🧾 Autres</h2>
+      {autres.length > 0 ? (
+        autres.map((log, index) => (
+          <div key={index} className="timeline-item">
+            <p>{convertTimestamp(log.date_transa)?.toLocaleString()}</p>
+            <p>{log.type} - {log.montant} €</p>
+          </div>
+        ))
+      ) : (
+        <p>Aucune autre transaction</p>
+      )}
+    </div>
+  </div>
+</div>
+
   );
 }
