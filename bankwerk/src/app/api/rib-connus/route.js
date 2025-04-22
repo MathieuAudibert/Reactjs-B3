@@ -12,9 +12,9 @@ export async function GET(req) {
             })
         }
 
-        const userDoc = await db.collection('Users').doc(uid).get()
+        const userDoc = await db.collection('Compte').doc(uid).get();
         if (!userDoc.exists) {
-            return new Response(JSON.stringify({ error: 'Utilisateur non trouvé' }), {
+            return new Response(JSON.stringify({ error: 'Compte non trouvé' }), {
                 status: 404,
                 headers: { 'Content-Type': 'application/json' },
             })
