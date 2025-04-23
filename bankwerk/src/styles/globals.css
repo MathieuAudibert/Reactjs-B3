@@ -70,38 +70,26 @@ ul {
   align-items: center;
 }
 
-.btn-blue {
-  background-color: #2563eb;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 15px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.btn-blue:hover {
-  background-color: #1e40af;
-}
-
+.btn-blue,
 .btn-blueDark {
   background-color: #1d4ed8;
   color: white;
-  padding: 10px 16px;
-  font-size: 14px;
-  font-weight: 600;
+  padding: 0.6rem 1.2rem;
   border-radius: 6px;
-  border: none;
-  cursor: pointer;
+  font-weight: 600;
   transition: background-color 0.3s;
+  text-decoration: none;
+  font-size: 15px;
+  border: none;
 }
 
-.btn-blueDark:hover {
-  background-color: #0f265e;
+.btn-blue:hover {
+  background-color: #0a2a9c;
 }
 
+.btn-blueDark {
+  background-color: #0a205c;
+}
 
 .container {
   max-width: 420px;
@@ -474,7 +462,27 @@ button[type="submit"]:hover {
   gap: 0.5rem;
 }
 
+.rib-mode-btn {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #f1f5f9;
+  cursor: pointer;
+  transition: 0.3s;
+}
 
+.rib-mode-btn.active {
+  background-color: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+}
+
+.rib-mode-btn:hover {
+  background-color: #e2e8f0;
+}
 
 
 
@@ -597,34 +605,4 @@ p {
   .dashboard-bottom {
     flex-direction: column;
   }
-}
-
-/* cryptos ^^ */
-
-.transaction-toggle {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin: 2rem 0;
-}
-
-.toggle-btn {
-  padding: 12px 24px;
-  font-size: 16px;
-  font-weight: 600;
-  border: 2px solid #2563eb;
-  background-color: white;
-  color: #2563eb;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.toggle-btn:hover {
-  background-color: #eff6ff;
-}
-
-.toggle-btn.active {
-  background-color: #2563eb;
-  color: white;
 }
