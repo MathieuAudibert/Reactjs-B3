@@ -1,70 +1,68 @@
-"use client";
-import { useState, useEffect } from "react";
-import { CaretDown, CaretUp } from '@phosphor-icons/react';
-import "../../styles/globals.css";
+"use client"
+import { useState, useEffect } from "react"
+import { CaretDown, CaretUp } from '@phosphor-icons/react'
+import "../../styles/globals.css"
 
 const convertTimestamp = (timestamp) => {
   if (timestamp && timestamp._seconds && timestamp._nanoseconds) {
-    return new Date(timestamp._seconds * 1000 + timestamp._nanoseconds / 1000000);
+    return new Date(timestamp._seconds * 1000 + timestamp._nanoseconds / 1000000)
   }
-  return null;
-};
+  return null
+}
 
 export default function Dashboard() {
-  const [solde, setSolde] = useState(null);
-  const [crypto, setCrypto] = useState([]);
-  const [transactionLogs, setTransactionLogs] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [showMoreAchats, setShowMoreAchats] = useState(false);
-  const [showMoreVentes, setShowMoreVentes] = useState(false);
-  const [showMoreAutres, setShowMoreAutres] = useState(false);
-  const [rib, setRib] = useState(null);
+  const [solde, setSolde] = useState(null)
+  const [crypto, setCrypto] = useState([])
+  const [transactionLogs, setTransactionLogs] = useState([])
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [showMoreAchats, setShowMoreAchats] = useState(false)
+  const [showMoreVentes, setShowMoreVentes] = useState(false)
+  const [showMoreAutres, setShowMoreAutres] = useState(false)
+  const [rib, setRib] = useState(null)
 
   useEffect(() => {
     const fetchSolde = async () => {
       try {
-        const userString = localStorage.getItem('user');
+        const userString = localStorage.getItem('user')
 
         if (!userString) {
-          setIsLoggedIn(false);
-          setLoading(false);
-          return;
+          setIsLoggedIn(false)
+          setLoading(false)
+          return
         }
 
-        const user = JSON.parse(userString);
-        const uid = user;
+        const user = JSON.parse(userString)
+        const uid = user
 
         if (!uid) {
-          setIsLoggedIn(false);
-          setLoading(false);
-          return;
+          setIsLoggedIn(false)
+          setLoading(false)
+          return
         }
 
-        const response = await fetch(`/api/balance?uid=${uid}`);
-        if (!response.ok) throw new Error("Erreur de récupération des données");
+        const response = await fetch(`/api/balance?uid=${uid}`)
+        console.log(response)
+        if (!response.ok) throw new Error("Erreur de récupération des données")
 
-        const data = await response.json();
-        console.log("🧾 Transaction types:", data.transaction_log.map(t => t.type));
-        console.log("tab", data.transaction_log)
+        const data = await response.json()
 
-        setSolde(data.solde);
-        setCrypto(data.crypto || []);
-        setRib(data.rib);
-        setTransactionLogs(data.transaction_log || []);
-        setIsLoggedIn(true);
+        setSolde(data.solde)
+        setCrypto(data.crypto || [])
+        setRib(data.rib)
+        setTransactionLogs(data.transaction_log || [])
+        setIsLoggedIn(true)
       } catch (error) {
-        console.error("❌ Erreur dans fetchSolde:", error);
-        setIsLoggedIn(false);
+        setIsLoggedIn(false)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
+    }
 
-    fetchSolde();
-  }, []);
+    fetchSolde()
+  }, [])
 
-  if (loading) return <div>Chargement...</div>;
+  if (loading) return <div>Chargement...</div>
 
   if (!isLoggedIn) {
     return (
@@ -72,20 +70,21 @@ export default function Dashboard() {
         <h1>Tableau de Bord</h1>
         <p>Vous devez être connecté pour voir votre solde.</p>
       </div>
-    );
+    )
   }
 
-  const normalizeType = (type) => type?.toLowerCase().trim();
+  const normalizeType = (type) => type?.toLowerCase().trim()
 
-  const achats = transactionLogs.filter(t => normalizeType(t.type).includes("achat"));
-  const ventes = transactionLogs.filter(t => normalizeType(t.type).includes("vente"));
+  const achats = transactionLogs.filter(t => normalizeType(t.type).includes("achat"))
+  const ventes = transactionLogs.filter(t => normalizeType(t.type).includes("vente"))
   const autres = transactionLogs.filter(t => {
-    const type = normalizeType(t.type);
-    return !type.includes("achat") && !type.includes("vente");
-  });
+    const type = normalizeType(t.type)
+    return !type.includes("achat") && !type.includes("vente")
+  })
+
 
   const renderItems = (items, showMore, setShowMore, isAchatVente = false) => {
-    const limitedItems = showMore ? items : items.slice(0, 4);
+    const limitedItems = showMore ? items : items.slice(0, 4)
     return (
       <>
         {limitedItems.map((log, index) => (
@@ -113,25 +112,37 @@ export default function Dashboard() {
           </button>
         )}
       </>
-    );
-  };
-  
+    )
+  }
 
+  
   return (
     <div className="dashboard-container">
-      <div className="dashboard-top">
-        <h1>Tableau de Bord</h1>
-        <p><strong>Solde :</strong> {solde} <b style={{ color: "green" }}>€</b></p>
-        <div className="crypto-list">
-          {crypto.length > 0 ? (
+        <h1 className='title-dashboard'>Tableau de Bord</h1>
+      <div className={`dashboard-top ${solde > 0 ? 'positive-balance' : 'negative-balance'}`}>
+      <p><strong style={{fontSize: "xx-large"}}>{solde}</strong> €</p>
+      </div>
+
+      <div className="dashboard-mid">
+      <div className="crypto-list">
+        <h2>Vos Cryptomonnaies</h2>
+        <div className="card-crypto">
+          {
+            console.log(crypto)}
+            {
+          crypto.length > 0 ? (
             crypto.map((item, index) => (
-              <span key={index}><strong>{item.nom} :</strong> {item.quantite} <b style={{ color: "green" }}>{item.symbole}</b></span>
+              <span key={index}> <strong>{index + 1}.</strong> {item.nom} : {item.quantite} <b>{item.symbole}</b> 
+              </span>
             ))
-          ) : (
+          ) 
+          
+          : (
             <p>Rien</p>
           )}
+          </div>
         </div>
-      </div>
+        </div>
 
       <div className="dashboard-bottom">
         <div className="dashboard-block">
@@ -162,5 +173,5 @@ export default function Dashboard() {
         </div>
       </div>
     </div>
-  );
+  )
 }

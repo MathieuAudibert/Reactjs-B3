@@ -120,7 +120,7 @@ export default function Transactions() {
   }
 
   return (
-    <div className="container">
+    <div className="container-transac">
       <h1>Effectuer un transfert</h1>
       
       {error && <div className="alert error">{error}</div>}
