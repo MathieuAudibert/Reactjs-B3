@@ -89,7 +89,7 @@ export default function CryptoPage() {
                     cryptos.map((crypto, index) => (
                         <div className="card" key={index}>
                             <h3>{crypto.rang}</h3>
-                            <img src={crypto.image} alt="" />
+                            <img src={crypto.image} height="30" alt="" />
                             <h2>{crypto.nom} ({crypto.symbole})</h2>
                             <p>Prix: {crypto.prix.toFixed(2)}</p>
                             <p>Pourcentage 30j: {crypto.pourcent_30j.toFixed(2)}%</p>
