@@ -63,6 +63,15 @@ export default function CryptoPage() {
             router.push('/login')
         }
     }
+    const handleSellClick = (cryptoSymbole) => {
+        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+
+        if (token) {
+            router.push(`/cryptos/${cryptoSymbole}`)
+        } else {
+            router.push('/login')
+        }
+    }
 
     if (isLoading) {
         return <div className="container">Loading...</div>
@@ -78,16 +87,23 @@ export default function CryptoPage() {
                 {cryptos.length > 0 ? (
                     cryptos.map((crypto, index) => (
                         <div className="card" key={index}>
+                            <h3>{crypto.rang}</h3>
+                            <img src={crypto.image} alt="" />
                             <h2>{crypto.nom} ({crypto.symbole})</h2>
-                            <p>Rang: {crypto.rang}</p>
-                            <p>Prix: {crypto.prix}</p>
-                            <p>Pourcentage 30j: {crypto.pourcent_30j}%</p>
+                            <p>Prix: {crypto.prix.toFixed(2)}</p>
+                            <p>Pourcentage 30j: {crypto.pourcent_30j.toFixed(2)}%</p>
                             <p>Dernière mise à jour: {new Date(crypto.derniere_update._seconds * 1000).toLocaleString()}</p>
                             <button
                                 onClick={() => handleBuyClick(crypto.symbole)}
-                                className="buy-button"
+                                className="btn-blue"
                             >
                                 Acheter
+                            </button>
+                            <button
+                                onClick={() => handleSellClick(crypto.symbole)}
+                                className="btn-red"
+                            >
+                                Vendre
                             </button>
                         </div>
                     ))
