@@ -72,9 +72,8 @@ export default function CryptoPage() {
         <div className="container">
             <h1>Les cryptos</h1>
             <button onClick={handleUpdateClick} disabled={isButtonDisabled}>
-                Mettre à jour la collection
+                {isButtonDisabled ? `Mettre à jour dans ${timer}s` : 'Mettre à jour la collection'}
             </button>
-            {timer > 0 && <p>Prochaine mise à jour dans {timer} secondes</p>}
             <div className="card-container">
                 {cryptos.length > 0 ? (
                     cryptos.map((crypto, index) => (
