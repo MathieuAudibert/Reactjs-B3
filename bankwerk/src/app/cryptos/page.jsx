@@ -71,7 +71,7 @@ export default function CryptoPage() {
     return (
         <div className="container">
             <h1>Les cryptos</h1>
-            <button onClick={handleUpdateClick} disabled={isButtonDisabled}>
+            <button classname="btn-blue" onClick={handleUpdateClick} disabled={isButtonDisabled}>
                 Mettre à jour la collection
             </button>
             {timer > 0 && <p>Prochaine mise à jour dans {timer} secondes</p>}
@@ -86,7 +86,7 @@ export default function CryptoPage() {
                             <p>Dernière mise à jour: {new Date(crypto.derniere_update._seconds * 1000).toLocaleString()}</p>
                             <button
                                 onClick={() => handleBuyClick(crypto.symbole)}
-                                className="buy-button"
+                                className="btn-blue"
                             >
                                 Acheter
                             </button>
