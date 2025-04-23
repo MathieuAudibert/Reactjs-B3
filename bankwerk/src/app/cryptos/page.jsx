@@ -80,7 +80,7 @@ export default function CryptoPage() {
 
     return (
         <div className="container">
-            <h1>Les cryptos</h1>
+            <h1>Les cryptomonnaies</h1>
             <button onClick={handleUpdateClick} disabled={isButtonDisabled}>
                 {isButtonDisabled ? `Mettre à jour dans ${timer}s` : 'Mettre à jour la collection'}
             </button>
