@@ -108,7 +108,7 @@ export default function Dashboard() {
                     <div key={cryptoItem.id}>
                       <p><b>Prix actuel: </b>{cryptoItem.prix.toFixed(2)} <b>€</b></p>
                       <p><b>Différence: </b>{cryptoItem.prix.toFixed(2)} - {log.details.prix_unite_crypto.toFixed(2)}</p>
-                      <p><b>Différence en pourcentage: </b>
+                      <p><b>Différence en %: </b>
                         {(
                           ((cryptoItem.prix - log.details.prix_unite_crypto) / log.details.prix_unite_crypto) * 100
                         ).toFixed(2)}%
