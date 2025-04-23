@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { CaretDown, CaretUp } from '@phosphor-icons/react'
 import "../../styles/globals.css"
 
@@ -83,26 +83,26 @@ export default function Dashboard() {
   })
 
 
-  const renderItems = (items, showMore, setShowMore, isAchatVente = false) => {
+  const renderItems = (items, showMore, setShowMore, isAchatVente) => {
     const limitedItems = showMore ? items : items.slice(0, 4)
     return (
-      <>
+      <React.Fragment>
         {limitedItems.map((log, index) => (
-          <div key={index} className="timeline-item">
+          <div key={index}>
             <p>{convertTimestamp(log.date_transa)?.toLocaleString()}</p>
             {isAchatVente ? (
-              <>
+              <React.Fragment>
                 <h1>{log.details.symbole_crypto}</h1>
-                <p><b>Montant/Unités: </b>{log.montant} <b style={{ color: "green" }}>€</b> - {log.details.nombre_crypto} <b style={{ color: "green" }}>{log.details.symbole_crypto}</b></p>
-                <p><b>Prix unités: </b>{log.details.prix_unite_crypto} <b style={{ color: "green" }}>€</b></p>
-              </>
+                <p><b>Montant/Unités: </b>{log.montant} <b>€</b> - {log.details.nombre_crypto} <b>{log.details.symbole_crypto}</b></p>
+                <p><b>Prix unités: </b>{log.details.prix_unite_crypto} <b>€</b></p>
+              </React.Fragment>
             ) : (
-              <>
+              <React.Fragment>
                 <h1 style={{ color: log.rib_cible === rib ? "green" : "red" }}>{log.montant}€</h1>
                 <p><b>De: </b>{log.rib_deb === rib ? "Vous" : log.rib_deb}</p>
                 <p><b>Pour: </b>{log.rib_cible === rib ? "Vous" : log.rib_deb}</p>
                 {log.type && <p><b>Type: </b>{log.type}</p>}
-              </>
+              </React.Fragment>
             )}
           </div>
         ))}
@@ -111,7 +111,7 @@ export default function Dashboard() {
             {showMore ? <CaretUp size={24} /> : <CaretDown size={24} />}
           </button>
         )}
-      </>
+      </React.Fragment>
     )
   }
 
@@ -127,8 +127,6 @@ export default function Dashboard() {
       <div className="crypto-list">
         <h2>Vos Cryptomonnaies</h2>
         <div className="card-crypto">
-          {
-            console.log(crypto)}
             {
           crypto.length > 0 ? (
             crypto.map((item, index) => (
@@ -146,7 +144,7 @@ export default function Dashboard() {
 
       <div className="dashboard-bottom">
         <div className="dashboard-block">
-          <h2 style={{ color: "red" }}>📥 Achats (Cryptos)</h2>
+          <h2>📥 Achats (Cryptos)</h2>
           {achats.length > 0 ? (
             renderItems(achats, showMoreAchats, setShowMoreAchats, true)
           ) : (
@@ -155,7 +153,7 @@ export default function Dashboard() {
         </div>
 
         <div className="dashboard-block">
-          <h2 style={{ color: "green" }}>📤 Ventes (Cryptos)</h2>
+          <h2>📤 Ventes (Cryptos)</h2>
           {ventes.length > 0 ? (
             renderItems(ventes, showMoreVentes, setShowMoreVentes, true)
           ) : (
