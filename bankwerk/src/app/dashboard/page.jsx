@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react"
 import { CaretDown, CaretUp } from '@phosphor-icons/react'
 import "../../styles/globals.css"
+import { useRouter } from 'next/navigation' // Pr la redirection vers l'achat de cryptos
 
 const convertTimestamp = (timestamp) => {
   if (timestamp && timestamp._seconds && timestamp._nanoseconds) {
@@ -21,6 +22,8 @@ export default function Dashboard() {
   const [showMoreAutres, setShowMoreAutres] = useState(false)
   const [rib, setRib] = useState(null)
   const [cryptoActuel, setCryptoActuel] = useState(null)
+  const router = useRouter()
+
 
   useEffect(() => {
     const fetchSolde = async () => {
@@ -70,6 +73,16 @@ export default function Dashboard() {
     fetchSolde()
   }, [])
 
+  const handleClick = (cryptoSymbole) => {
+    const token = typeof window !== 'inconnu' ? localStorage.getItem('token') : null
+    
+    if (token) {
+      router.push(`/cryptos/${cryptoSymbole}`)
+    } else {
+      router.push('/login')
+    }
+  }
+
   if (loading) return <div>Chargement...</div>
 
   if (!isLoggedIn) {
@@ -100,7 +113,7 @@ export default function Dashboard() {
             <p>{convertTimestamp(log.date_transa)?.toLocaleString()}</p>
             {isAchatVente ? (
               <React.Fragment>
-                <h1>{log.details.symbole_crypto}</h1>
+                <div onClick={() => handleClick(log.details.symbole_crypto) }><h1>{log.details.symbole_crypto}</h1></div>
                 <p><b>Montant/Unités: </b>{log.montant} <b>€</b> - {log.details.nombre_crypto} <b>{log.details.symbole_crypto}</b></p>
                 <p><b>Prix unités: </b>{log.details.prix_unite_crypto.toFixed(2)} <b>€</b></p>
                 {cryptoActuel.map(
