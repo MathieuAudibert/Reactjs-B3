@@ -1,71 +1,71 @@
-"use client"
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+"use client";
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function CryptoPage() {
-    const [cryptos, setCryptos] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
-    const [timer, setTimer] = useState(60)
-    const [isButtonDisabled, setIsButtonDisabled] = useState(false)
-    const router = useRouter()
+    const [cryptos, setCryptos] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [timer, setTimer] = useState(60);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+    const router = useRouter();
 
     const fetchCryptos = async () => {
         try {
             const response = await fetch('/api/cryptos', {
                 method: 'GET',
-            })
+            });
 
             if (!response.ok) {
-                throw new Error('Failed to fetch cryptos')
+                throw new Error('Failed to fetch cryptos');
             }
 
-            const data = await response.json()
-            console.log('Fetched cryptos:', data)
-            setCryptos(data)
-            setIsLoading(false)
-            setTimer(60)
-            setIsButtonDisabled(true)
+            const data = await response.json();
+            console.log('Fetched cryptos:', data);
+            setCryptos(data);
+            setIsLoading(false);
+            setTimer(60);
+            setIsButtonDisabled(true);
         } catch (error) {
-            console.error('Error fetching cryptos:', error)
-            setIsLoading(false)
+            console.error('Error fetching cryptos:', error);
+            setIsLoading(false);
         }
-    }
+    };
 
     useEffect(() => {
-        fetchCryptos()
+        fetchCryptos();
 
         const interval = setInterval(() => {
             setTimer((prevTimer) => {
                 if (prevTimer > 0) {
-                    return prevTimer - 1
+                    return prevTimer - 1;
                 } else {
-                    clearInterval(interval)
-                    setIsButtonDisabled(false)
-                    return 0
+                    clearInterval(interval);
+                    setIsButtonDisabled(false);
+                    return 0;
                 }
-            })
-        }, 1000)
+            });
+        }, 1000);
 
-        return () => clearInterval(interval)
-    }, [])
+        return () => clearInterval(interval);
+    }, []);
 
     const handleUpdateClick = () => {
-        setIsLoading(true)
-        fetchCryptos()
-    }
+        setIsLoading(true);
+        fetchCryptos();
+    };
 
     const handleBuyClick = (cryptoSymbole) => {
-        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 
         if (token) {
-            router.push(`/cryptos/${cryptoSymbole}`)
+            router.push(`/cryptos/${cryptoSymbole}`);
         } else {
-            router.push('/login')
+            router.push('/login');
         }
-    }
+    };
 
     if (isLoading) {
-        return <div className="container">Loading...</div>
+        return <div className="container">Loading...</div>;
     }
 
     return (
@@ -96,5 +96,5 @@ export default function CryptoPage() {
                 )}
             </div>
         </div>
-    )
+    );
 }
