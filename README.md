@@ -18,8 +18,8 @@
 * [x] Réaliser des virements entre deux comptes (/transfer)
   * [x] Back
   * [x] Front
-* [ ] Réaliser des opérations de ventes/achats (/buy ou /transfer)
-  * [ ] Back
+* [x] Réaliser des opérations de ventes/achats (/buy ou /transfer)
+  * [x] Back
   * [ ] Front
 * [ ] Design UI 
 
