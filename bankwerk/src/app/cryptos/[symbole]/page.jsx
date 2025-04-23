@@ -212,12 +212,12 @@ export default function CryptoTransactionPage({ params }) {
                 </div>
 
                 <div className="form-actions">
-                    <button type="submit" className="submit-btn">
+                    <button type="submit" className="btn-blueDark">
                         {transactionType === 'achat' ? 'Acheter' : 'Vendre'} {crypto.symbole}
                     </button>
                     <button
                         type="button"
-                        className="cancel-btn"
+                        className="btn-blue"
                         onClick={() => router.back()}
                     >
                         Annuler
