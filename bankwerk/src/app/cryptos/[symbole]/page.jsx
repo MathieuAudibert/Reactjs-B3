@@ -14,6 +14,10 @@ export default function CryptoTransactionPage({ params }) {
     const [ribLoading, setRibLoading] = useState(true)
     const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
+    const [solde, setSolde] = useState(0)
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false)
+    const [cryptoData, setCryptoData] = useState(null)
+    console.log("symbole: ", symbole)
 
     useEffect(() => {
         const fetchUserRib = async () => {
@@ -28,6 +32,14 @@ export default function CryptoTransactionPage({ params }) {
 
                 const data = await response.json()
                 setUserRib(data.rib)
+                setSolde(data.solde)
+                for (let crypto of data.crypto) {
+                    if (crypto.symbole == symbole) {
+                        setCryptoData(crypto.quantite)
+                    }
+                }
+
+                console.log("user", data)
             } catch (err) {
                 console.error('Fetch RIB error:', err)
                 setError(err.message || 'Erreur de récupération du RIB')
@@ -38,6 +50,7 @@ export default function CryptoTransactionPage({ params }) {
 
         fetchUserRib()
     }, [])
+    const posses = cryptoData ? parseFloat(cryptoData).toFixed(2) : 0
 
     useEffect(() => {
         const fetchCrypto = async () => {
@@ -46,7 +59,7 @@ export default function CryptoTransactionPage({ params }) {
                 setLoading(false)
                 return
             }
-            
+
             try {
                 const res = await fetch(`/api/cryptos/${symbole}`)
                 if (!res.ok) {
@@ -70,6 +83,14 @@ export default function CryptoTransactionPage({ params }) {
         fetchCrypto()
     }, [symbole])
 
+    useEffect(() => {
+        if (posses === null || posses === 0) {
+            setIsButtonDisabled(true)
+        } else {
+            setIsButtonDisabled(false)
+        }
+    }, [cryptoData])
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         setError('')
@@ -89,7 +110,7 @@ export default function CryptoTransactionPage({ params }) {
             const endpoint = transactionType === 'achat'
                 ? `/api/cryptos/${crypto.symbole}/achat`
                 : `/api/cryptos/${crypto.symbole}/vente`
-                
+
             const userString = localStorage.getItem('user')
             const uid = JSON.parse(userString)
 
@@ -129,6 +150,14 @@ export default function CryptoTransactionPage({ params }) {
 
             <div className="crypto-info">
                 <div className="info-row">
+                    <span className="label">En possession: </span>
+                    <span className="value">{posses} {symbole}</span>
+                </div>
+                <div className="info-row">
+                    <span className="label">Solde: </span>
+                    <span className="value">{solde} €</span>
+                </div>
+                <div className="info-row">
                     <span className="label">Prix actuel:</span>
                     <span className="value">{parseFloat(crypto.prix).toFixed(2)} €</span>
                 </div>
@@ -156,6 +185,7 @@ export default function CryptoTransactionPage({ params }) {
                 <button
                     className={`toggle-btn ${transactionType === 'vente' ? 'active' : ''}`}
                     onClick={() => setTransactionType('vente')}
+                    disabled={isButtonDisabled}
                 >
                     Vendre
                 </button>
@@ -212,7 +242,7 @@ export default function CryptoTransactionPage({ params }) {
                 </div>
 
                 <div className="form-actions">
-                    <button type="submit" className="submit-btn">
+                    <button type="submit" className="submit-btn" disabled={transactionType === 'vente' && isButtonDisabled}>
                         {transactionType === 'achat' ? 'Acheter' : 'Vendre'} {crypto.symbole}
                     </button>
                     <button
