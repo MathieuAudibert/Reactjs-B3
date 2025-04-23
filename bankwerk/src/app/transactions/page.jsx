@@ -120,7 +120,7 @@ export default function Transactions() {
   }
 
   return (
-    <div className="container">
+    <div className="container-transac">
       <h1>Effectuer un transfert</h1>
       
       {error && <div className="alert error">{error}</div>}
@@ -144,14 +144,14 @@ export default function Transactions() {
             <div className="rib-input-options">
               <button
                 type="button"
-                className={`rib-mode-btn ${ribInputMode === 'select' ? 'active' : ''}`}
+                className={`rib-mode-btn btn-blueDark ${ribInputMode === 'select' ? 'active' : ''}`}
                 onClick={() => setRibInputMode('select')}
               >
                 Choisir un RIB connu
               </button>
               <button
                 type="button"
-                className={`rib-mode-btn ${ribInputMode === 'input' ? 'active' : ''}`}
+                className={`rib-mode-btn btn-blueDark ${ribInputMode === 'input' ? 'active' : ''}`}
                 onClick={() => setRibInputMode('input')}
               >
                 Saisir un nouveau RIB

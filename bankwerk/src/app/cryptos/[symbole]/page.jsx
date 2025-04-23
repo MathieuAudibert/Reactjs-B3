@@ -247,7 +247,7 @@ export default function CryptoTransactionPage({ params }) {
                     </button>
                     <button
                         type="button"
-                        className="cancel-btn"
+                        className="btn-blue"
                         onClick={() => router.back()}
                     >
                         Annuler
