@@ -46,7 +46,7 @@ export default function Profil() {
         });
         setIsLoggedIn(true);
       } catch (error) {
-        console.error("Erreur=", error);
+        console.error("Erreur: ", error);
         setIsLoggedIn(false);
       } finally {
         setLoading(false);
