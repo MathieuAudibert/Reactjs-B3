@@ -1,33 +1,41 @@
-import { db } from '../../../config/firebaseAdmin'; 
+import { db } from '../../../config/firebaseAdmin'
 
-export default async function handler(req, res) {
-  if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  const { uid } = req.query;
+export async function GET(req) {
+  const { searchParams } = new URL(req.url)
+  const uid = searchParams.get("uid")
 
   if (!uid) {
-    return res.status(400).json({ error: 'User ID is required' });
+    return new Response(JSON.stringify({ error: "UID manquant" }), { status: 400 })
   }
 
   try {
-    const userDoc = await db.collection('users').doc(uid).get();
+    const userDoc = await db.collection('Users').doc(uid).get()
+    const compteDoc = await db.collection('Compte').doc(uid).get()
 
     if (!userDoc.exists) {
-      return res.status(404).json({ error: 'User not found' });
+      return new Response(JSON.stringify({ error: "Utilisateur introuvable" }), { status: 404 })
     }
 
-    const userData = userDoc.data();
+    const userData = userDoc.data()
+    const compteData = compteDoc.exists ? compteDoc.data() : {}
 
-    res.status(200).json({
+    const dateCrea =
+      userData.date_crea_cpt?.toDate?.().toISOString?.() || userData.date_crea_cpt || null
+
+    return new Response(JSON.stringify({
       nom: userData.nom,
       prenom: userData.prenom,
-      rib: userData.rib,
-      date_crea: userData.date_crea.toDate().toISOString() 
-    });
+      email: userData.email,
+      rib: compteData.rib || null,
+      date_crea: dateCrea
+    }), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
   } catch (error) {
-    console.error('Error fetching user data:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Erreur récupération profil :", error)
+    return new Response(JSON.stringify({ error: "Erreur interne" }), { status: 500 })
   }
 }

@@ -691,6 +691,68 @@ all .3s;
   color: #444;
 }
 
+
+/* profil */
+/* Profil utilisateur */
+.profile-title {
+  text-align: center;
+  font-size: 2.4rem;
+  margin-top: 2rem;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.profile-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.profile-card {
+  background: #f3f4f6;
+  padding: 2rem 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.profile-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  border-bottom: 1px solid #d1d5db;
+  padding-bottom: 0.5rem;
+}
+
+.label {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+/* favicon */
+.header-profile-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #e2e8f0; /* gris clair */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  border: 2px solid #cbd5e1;
+}
+
+.header-profile-icon:hover {
+  background-color: #d1d5db;
+}
+
 @media (max-width: 992px) {
   .dashboard-bottom {
     flex-direction: column;
