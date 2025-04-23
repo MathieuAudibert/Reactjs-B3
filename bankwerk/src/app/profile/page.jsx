@@ -35,7 +35,7 @@ export default function Profil() {
         }
 
         const response = await fetch(`/api/user?uid=${uid}`);
-        if (!response.ok) throw new Error("Erreur de récupération des données");
+        if (!response.ok) throw new Error("Erreur=");
 
         const data = await response.json();
         setUserData({
@@ -46,7 +46,7 @@ export default function Profil() {
         });
         setIsLoggedIn(true);
       } catch (error) {
-        console.error("❌ Erreur dans fetchUserData:", error);
+        console.error("Erreur=", error);
         setIsLoggedIn(false);
       } finally {
         setLoading(false);
@@ -68,14 +68,28 @@ export default function Profil() {
   }
 
   return (
-    <div className="profil-container">
-      <h1>Profil Utilisateur</h1>
-      <div className="user-info">
-        <p><strong>Nom:</strong> {userData.nom}</p>
-        <p><strong>Prénom:</strong> {userData.prenom}</p>
-        <p><strong>RIB:</strong> {userData.rib}</p>
-        <p><strong>Date de création:</strong> {userData.date_crea}</p>
-      </div>
+    <div className="container">
+<h1 className="profile-title">Profil Utilisateur</h1> 
+<div className="profile-wrapper">
+  <div className="profile-card">
+    <div className="profile-item">
+      <span className="label">Nom :</span>
+      <span>{userData.nom}</span>
     </div>
+    <div className="profile-item">
+      <span className="label">Prénom :</span>
+      <span>{userData.prenom}</span>
+    </div>
+    <div className="profile-item">
+      <span className="label">RIB :</span>
+      <span>{userData.rib}</span>
+    </div>
+    <div className="profile-item">
+      <span className="label">Date de création :</span>
+      <span>{userData.date_crea}</span>
+    </div>
+  </div>
+</div>
+</div>
   );
 }

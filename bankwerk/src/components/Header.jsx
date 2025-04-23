@@ -4,6 +4,7 @@ import Link from "next/link";
 import "../styles/globals.css";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { UserCircle } from "@phosphor-icons/react"
 
 export default function Header() {
     const router = useRouter();
@@ -42,6 +43,14 @@ export default function Header() {
                     </li>
                     <li>
                         <Link href="/cryptos">Cryptomonnaies</Link>
+                    </li>
+                    <li>
+            <button
+              onClick={() => router.push("/profile")}
+              className="header-profile-icon"
+            >
+              <UserCircle size={28} weight="fill" />
+            </button>
                     </li>
                     <li>
                         <button onClick={logout} className="btn-blueDark">Déconnexion</button>
