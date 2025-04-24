@@ -1,16 +1,27 @@
 services:
-  frontend: 
-    image: nginx:latest
-    container_name: docker-nginx
-    ports:
-      - '80:80'
-  app:
+  frontend:  
     build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: docker-next
-    ports:
-      - '3000:3000'
+      dockerfile: Dockerfile 
+    command: npm run dev  
     volumes:
-      - .:/app
-      - /app/node_modules
+      - ./src/app:/app/src/app  
+      - /app/src/app/config  
+      - /app/src/app/service 
+      - /app/src/app/api  
+    ports:
+      - "3000:3000"  
+    environment:
+      NODE_ENV: development  
+
+  backend:  
+    build:
+      dockerfile: Dockerfile 
+    command: npm run dev  
+    volumes:
+      - ./src/app/config:/app/src/app/config  
+      - ./src/app/service:/app/src/app/service  
+      - ./src/app/api:/app/src/app/api 
+    ports:
+      - "4000:4000"  
+    environment:
+      NODE_ENV: development  
