@@ -1,15 +1,9 @@
 "use client"
-import React, { useState, useEffect } from "react"
-import { CaretDown, CaretUp } from '@phosphor-icons/react'
-import "../../styles/globals.css"
-import { useRouter } from 'next/navigation' // Pr la redirection vers l'achat de cryptos
 
-const convertTimestamp = (timestamp) => {
-  if (timestamp && timestamp._seconds && timestamp._nanoseconds) {
-    return new Date(timestamp._seconds * 1000 + timestamp._nanoseconds / 1000000)
-  }
-  return null
-}
+import React, { useState, useEffect } from "react"
+import CryptoOwned from "@/components/Crypto/CryptoOwns"
+import RenderItems from "@/components/RenderItems"
+import "../../styles/globals.css"
 
 export default function Dashboard() {
   const [solde, setSolde] = useState(null)
@@ -22,22 +16,12 @@ export default function Dashboard() {
   const [showMoreAutres, setShowMoreAutres] = useState(false)
   const [rib, setRib] = useState(null)
   const [cryptoActuel, setCryptoActuel] = useState(null)
-  const router = useRouter()
-
 
   useEffect(() => {
     const fetchSolde = async () => {
       try {
-        const userString = localStorage.getItem('user')
-
-        if (!userString) {
-          setIsLoggedIn(false)
-          setLoading(false)
-          return
-        }
-
-        const user = JSON.parse(userString)
-        const uid = user
+        const userString = localStorage.getItem("user")
+        const uid = userString ? JSON.parse(userString) : null
 
         if (!uid) {
           setIsLoggedIn(false)
@@ -45,17 +29,15 @@ export default function Dashboard() {
           return
         }
 
-        const response = await fetch(`/api/balance?uid=${uid}`)
-        console.log(response)
+        const [balanceRes, cryptosRes] = await Promise.all([
+          fetch(`/api/balance?uid=${uid}`),
+          fetch("/api/cryptos", { method: "GET" }),
+        ])
 
-        const cryptosaj = await fetch('/api/cryptos', {method: 'GET'})
-        console.log(cryptosaj)
+        if (!balanceRes.ok || !cryptosRes.ok) throw new Error("Erreur API")
 
-        if (!response.ok) throw new Error("Erreur de récupération des données")
-        if (!cryptosaj.ok) throw new Error("Erreur de récupération des cryptos")
-
-        const data = await response.json()
-        const cryptos = await cryptosaj.json()
+        const data = await balanceRes.json()
+        const cryptos = await cryptosRes.json()
 
         setCryptoActuel(cryptos)
         setSolde(data.solde)
@@ -73,15 +55,14 @@ export default function Dashboard() {
     fetchSolde()
   }, [])
 
-  const handleClick = (cryptoSymbole) => {
-    const token = typeof window !== 'inconnu' ? localStorage.getItem('token') : null
-    
-    if (token) {
-      router.push(`/cryptos/${cryptoSymbole}`)
-    } else {
-      router.push('/login')
-    }
-  }
+  const normalizeType = (type) => type?.toLowerCase().trim()
+
+  const achats = transactionLogs.filter(t => normalizeType(t.type).includes("achat"))
+  const ventes = transactionLogs.filter(t => normalizeType(t.type).includes("vente"))
+  const autres = transactionLogs.filter(t => {
+    const type = normalizeType(t.type)
+    return !type.includes("achat") && !type.includes("vente")
+  })
 
   if (loading) return <div>Chargement...</div>
 
@@ -94,115 +75,85 @@ export default function Dashboard() {
     )
   }
 
-  const normalizeType = (type) => type?.toLowerCase().trim()
-
-  const achats = transactionLogs.filter(t => normalizeType(t.type).includes("achat"))
-  const ventes = transactionLogs.filter(t => normalizeType(t.type).includes("vente"))
-  const autres = transactionLogs.filter(t => {
-    const type = normalizeType(t.type)
-    return !type.includes("achat") && !type.includes("vente")
-  })
-
-
-  const renderItems = (items, showMore, setShowMore, isAchatVente) => {
-    const limitedItems = showMore ? items : items.slice(0, 4)
-    return (
-      <React.Fragment>
-        {limitedItems.map((log, index) => (
-          <div key={index}>
-            <p>{convertTimestamp(log.date_transa)?.toLocaleString()}</p>
-            {isAchatVente ? (
-              <React.Fragment>
-                <div onClick={() => handleClick(log.details.symbole_crypto) }><h1>{log.details.symbole_crypto}</h1></div>
-                <p><b>Montant/Unités: </b>{log.montant} <b>€</b> - {log.details.nombre_crypto} <b>{log.details.symbole_crypto}</b></p>
-                <p><b>Prix unités: </b>{log.details.prix_unite_crypto.toFixed(2)} <b>€</b></p>
-                {cryptoActuel.map(
-                  (cryptoItem) => cryptoItem.symbole === log.details.symbole_crypto && (
-                    <div key={cryptoItem.id}>
-                      <p><b>Prix actuel: </b>{cryptoItem.prix.toFixed(2)} <b>€</b></p>
-                      <p><b>Différence: </b>{cryptoItem.prix.toFixed(2)} - {log.details.prix_unite_crypto.toFixed(2)}</p>
-                      <p><b>Différence en %: </b>
-                        {(
-                          ((cryptoItem.prix - log.details.prix_unite_crypto) / log.details.prix_unite_crypto) * 100
-                        ).toFixed(2)}%
-                      </p>
-                    </div>
-                  )
-                )}
-
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                <h1 style={{ color: log.rib_cible === rib ? "green" : "red" }}>{log.montant}€</h1>
-                <p><b>De: </b>{log.rib_deb === rib ? "Vous" : log.rib_deb}</p>
-                <p><b>Pour: </b>{log.rib_cible === rib ? "Vous" : log.rib_deb}</p>
-                {log.type && <p><b>Type: </b>{log.type}</p>}
-              </React.Fragment>
-            )}
-          </div>
-        ))}
-        {items.length > 10 && (
-          <button onClick={() => setShowMore(!showMore)} className="show-more-button">
-            {showMore ? <CaretUp size={24} /> : <CaretDown size={24} />}
-          </button>
-        )}
-      </React.Fragment>
-    )
-  }
-
-  
   return (
     <div className="dashboard-container">
-        <h1 className='title-dashboard'>Tableau de Bord</h1>
-      <div className={`dashboard-top ${solde > 0 ? 'positive-balance' : 'negative-balance'}`}>
-      <p><strong style={{fontSize: "xx-large"}}>{solde}</strong> €</p>
+      <h1 className="title-dashboard">Tableau de Bord</h1>
+
+      <div className={`dashboard-top ${solde > 0 ? "positive-balance" : "negative-balance"}`}>
+        <p><strong style={{ fontSize: "xx-large" }}>{solde}</strong> €</p>
       </div>
 
       <div className="dashboard-mid">
-      <div className="crypto-list">
-        <h2>Vos Cryptomonnaies</h2>
-        <div className="card-crypto">
-            {
-          crypto.length > 0 ? (
-            crypto.map((item, index) => (
-              <span key={index}> <strong>{index + 1}.</strong> {item.nom} : {item.quantite} <b>{item.symbole}</b> 
-              </span>
-            ))
-          ) 
-          
-          : (
-            <p>Rien</p>
-          )}
-          </div>
+        <div className="crypto-list">
+          <h2>Vos Cryptomonnaies</h2>
+
+          {(() => {
+            let totalCryptoValue = 0
+
+            const cryptoElements = crypto.map((item, index) => {
+              const current = cryptoActuel.find(c => c.symbole === item.symbole)
+
+              const achatsPourCrypto = achats.filter(
+                (t) => t.details?.symbole_crypto === item.symbole
+              )
+
+              const totalMontant = achatsPourCrypto.reduce((sum, t) => sum + (t.montant || 0), 0)
+              const totalQuantite = achatsPourCrypto.reduce(
+                (sum, t) => sum + (t.details?.nombre_crypto || 0), 0
+              )
+
+              const prixAchatMoyen = totalQuantite > 0 ? totalMontant / totalQuantite : 0
+              const prixActuel = current?.prix || 0
+              const difference = prixActuel - prixAchatMoyen
+              const pourcentage = prixAchatMoyen
+                ? ((difference / prixAchatMoyen) * 100).toFixed(2)
+                : "0.00"
+
+              const totalCryptoEuros = totalQuantite * prixActuel
+              totalCryptoValue += totalCryptoEuros
+
+              return (
+                <CryptoOwned
+                  key={index}
+                  index={index}
+                  item={item}
+                  prixActuel={prixActuel}
+                  difference={difference}
+                  pourcentage={pourcentage}
+                />
+              )
+            })
+
+            return (
+              <React.Fragment>
+                <p><strong>Solde Total :</strong> {totalCryptoValue.toFixed(2)} €</p>
+                {cryptoElements}
+              </React.Fragment>
+            )
+          })()}
         </div>
-        </div>
+      </div>
 
       <div className="dashboard-bottom">
-        <div className="dashboard-block">
+        <div className="dashboard-block green-block">
           <h2>📥 Achats (Cryptos)</h2>
-          {achats.length > 0 ? (
-            renderItems(achats, showMoreAchats, setShowMoreAchats, true)
-          ) : (
-            <p>Rien</p>
-          )}
+          {achats.length > 0
+            ? <RenderItems items={achats} showMore={showMoreAchats} setShowMore={setShowMoreAchats} isAchatVente />
+            : <p>Rien</p>}
         </div>
 
-        <div className="dashboard-block">
+        <div className="dashboard-block red-block">
           <h2>📤 Ventes (Cryptos)</h2>
-          {ventes.length > 0 ? (
-            renderItems(ventes, showMoreVentes, setShowMoreVentes, true)
-          ) : (
-            <p>Rien</p>
-          )}
+          {ventes.length > 0
+            ? <RenderItems items={ventes} showMore={showMoreVentes} setShowMore={setShowMoreVentes} isAchatVente />
+            : <p>Rien</p>}
         </div>
 
-        <div className="dashboard-block">
+        <div className="dashboard-block blue-block">
           <h2>🧾 Autres</h2>
-          {autres.length > 0 ? (
-            renderItems(autres, showMoreAutres, setShowMoreAutres, false)
-          ) : (
-            <p>Rien</p>
-          )}
+          {autres.length > 0
+            ? <RenderItems items={autres} rib={rib} showMore={showMoreAutres} setShowMore={setShowMoreAutres} isAchatVente={false} />
+            : <p>Rien</p>}
         </div>
       </div>
     </div>

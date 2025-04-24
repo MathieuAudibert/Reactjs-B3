@@ -12,7 +12,7 @@ export async function GET(req) {
             })
         }
 
-        const userDoc = await db.collection('Compte').doc(uid).get();
+        const userDoc = await db.collection('Compte').doc(uid).get()
         if (!userDoc.exists) {
             return new Response(JSON.stringify({ error: 'Compte non trouvé' }), {
                 status: 404,

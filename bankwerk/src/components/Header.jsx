@@ -1,32 +1,32 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import "../styles/globals.css";
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link"
+import "../styles/globals.css"
+import React, { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import { UserCircle } from "@phosphor-icons/react"
 
 export default function Header() {
-    const router = useRouter();
-    const [isConnected, setIsConnected] = useState(false);
+    const router = useRouter()
+    const [isConnected, setIsConnected] = useState(false)
     
     useEffect(() => {
         const handleStorageChange = () => {
-            setIsConnected(!!localStorage.getItem("token"));
-        };
-        window.addEventListener("storage", handleStorageChange);
-        handleStorageChange();
+            setIsConnected(!!localStorage.getItem("token"))
+        }
+        window.addEventListener("storage", handleStorageChange)
+        handleStorageChange()
         return () => {
-            window.removeEventListener("storage", handleStorageChange);
-        };
-    }, []);
+            window.removeEventListener("storage", handleStorageChange)
+        }
+    }, [])
 
     const logout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        setIsConnected(false);
-        router.push("/");
-    };
+        localStorage.removeItem("token")
+        localStorage.removeItem("user")
+        setIsConnected(false)
+        router.push("/")
+    }
 
     return (
         <nav className="navbar">
@@ -82,5 +82,5 @@ export default function Header() {
                 </React.Fragment>
             )}
         </nav>
-    );
+    )
 }
