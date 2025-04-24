@@ -1,7 +1,6 @@
 "use client"
 import { useState, useEffect } from "react"
 import "../../styles/globals.css"
-import { useRouter } from 'next/navigation'
 
 export default function Profil() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -12,8 +11,7 @@ export default function Profil() {
     rib: '',
     date_crea: ''
   })
-  const router = useRouter()
-//fff
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -88,9 +86,9 @@ export default function Profil() {
       <span className="label">Date de création :</span>
       <span>{userData.date_crea}</span>
     </div>
-    {/* <div className="profile-item">
-      <button className="btn-blue">Faire un emprunt</button>
-    </div> */}
+    <div className="profile-item">
+      <a className="btn-blue" href='/contact'>Nous Contacter</a>
+    </div>
   </div>
 </div>
 </div>

@@ -219,6 +219,7 @@ ul {
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease;
+  margin-bottom: 50px;
 }
 
 .service:hover {
@@ -635,6 +636,7 @@ p {
 }
 
 .card-crypto {
+  margin: auto;
   background:
 #ffffff0d;
   border:
@@ -934,9 +936,18 @@ h1.title-dashboard,
   width: 20%;
   margin: auto;
 }
-.contact-form input,
-.contact-form textarea {
-  width: 100%;
+.contact-form input
+ {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  background: #f9f9f9;
+}
+
+.contact-form textarea{
+  width: 95%;
   padding: 1rem;
   margin-bottom: 1rem;
   border-radius: 8px;
