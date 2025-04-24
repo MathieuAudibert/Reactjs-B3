@@ -29,7 +29,6 @@ export async function GET(req) {
         const rib = soldeDoc.data().rib
         const crypto = soldeDoc.data().cryptos || []
 
-        // req pour les transactions soit id_compte = uid soit un des ribs = rib 
         const transactionsRef = db.collection('Transactions')
 
         

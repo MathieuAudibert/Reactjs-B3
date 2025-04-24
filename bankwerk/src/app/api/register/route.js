@@ -1,6 +1,13 @@
-const { genereRIB } = require('@/utils/utils')
+
+
 const { auth, db } = require('../../../config/firebaseAdmin')
 const bcrypt = require('bcrypt')
+
+function genereRIB() {
+    const prefix = "BWK92-"
+    const chiffres = Math.floor(Math.random() * 100000000).toString().padStart(8, '0')
+    return prefix + chiffres
+}
 
 export async function POST(req) {
     try {

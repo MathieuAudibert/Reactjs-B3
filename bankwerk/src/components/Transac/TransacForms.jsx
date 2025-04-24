@@ -1,5 +1,6 @@
 export default function TransactionForm({ transactionType, crypto, userRib, montant, setAmount, quantite, setQuantity, handleSubmit, handleCancel, isButtonDisabled, error, success }) {
     return (
+      
       <form onSubmit={handleSubmit} className="transaction-form">
         <div className="form-group">
           <label htmlFor="rib" className="form-label">Votre RIB:</label>

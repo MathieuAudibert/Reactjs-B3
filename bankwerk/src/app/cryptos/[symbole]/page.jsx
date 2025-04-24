@@ -20,8 +20,6 @@ export default function CryptoTransactionPage() {
     const [solde, setSolde] = useState(0)
     const [isButtonDisabled, setIsButtonDisabled] = useState(false)
     const [cryptoData, setCryptoData] = useState(null)
-    console.log("symbole: ", symbole)
-
     useEffect(() => {
         const fetchUserRib = async () => {
             try {

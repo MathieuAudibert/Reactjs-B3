@@ -46,7 +46,6 @@ async function updateCryptoCollection() {
     }
 }
 
-//setInterval(updateCryptoCollection, 15 * 60 * 1000) // 15min
 setInterval(updateCryptoCollection, 5 * 60 * 1000) 
 updateCryptoCollection()
 module.exports = {

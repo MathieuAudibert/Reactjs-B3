@@ -19,7 +19,6 @@ export default function ContactForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Ici tu pourrais envoyer vers une API
     console.log("Données envoyées :", form)
     setSubmitted(true)
     setForm({ nom: "", email: "", sujet: "", message: "" })
