@@ -1,6 +1,7 @@
 'use client'
 
 import ServiceCard from "@/components/Home/ServiceCard"
+import { Bank, CurrencyBtc, Laptop, Swap } from "@phosphor-icons/react"
 
 const allServices = [
   {

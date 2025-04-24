@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react"
 import ServiceCard from "@/components/Home/ServiceCard.jsx"
 import TopHeader from "@/components/Home/TopHeader.jsx"
 import AboutUs from "@/components/Home/AboutUs.jsx"
+import { Bank, CurrencyBtc, Laptop, Swap } from "@phosphor-icons/react"
 
 export default function Home() {
   const [isConnected, setIsConnected] = useState(false)
