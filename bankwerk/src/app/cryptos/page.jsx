@@ -54,16 +54,7 @@ export default function CryptoPage() {
         location.reload()
     }
 
-    const handleBuyClick = (cryptoSymbole) => {
-        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
-
-        if (token) {
-            router.push(`/cryptos/${cryptoSymbole}`)
-        } else {
-            router.push('/login')
-        }
-    }
-    const handleSellClick = (cryptoSymbole) => {
+    const handleDetailClick = (cryptoSymbole) => {
         const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
 
         if (token) {
@@ -94,16 +85,10 @@ export default function CryptoPage() {
                             <p>Pourcentage 30j: {crypto.pourcent_30j.toFixed(2)}%</p>
                             <p>Dernière mise à jour: {new Date(crypto.derniere_update._seconds * 1000).toLocaleString()}</p>
                             <button
-                                onClick={() => handleBuyClick(crypto.symbole)}
+                                onClick={() => handleDetailClick(crypto.symbole)}
                                 className="btn-blue"
                             >
-                                Acheter
-                            </button>
-                            <button
-                                onClick={() => handleSellClick(crypto.symbole)}
-                                className="btn-red"
-                            >
-                                Vendre
+                                Détail
                             </button>
                         </div>
                     ))

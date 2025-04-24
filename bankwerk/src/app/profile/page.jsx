@@ -88,6 +88,9 @@ export default function Profil() {
       <span className="label">Date de création :</span>
       <span>{userData.date_crea}</span>
     </div>
+    {/* <div className="profile-item">
+      <button className="btn-blue">Faire un emprunt</button>
+    </div> */}
   </div>
 </div>
 </div>
