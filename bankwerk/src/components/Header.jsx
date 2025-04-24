@@ -1,10 +1,10 @@
 "use client"
 
 import Link from "next/link"
-import "../styles/globals.css"
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { UserCircle } from "@phosphor-icons/react"
+import "../styles/globals.css"
 
 export default function Header() {
     const router = useRouter()

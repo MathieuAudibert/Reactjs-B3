@@ -421,6 +421,12 @@ ul {
   color: #334155;
 }
 
+.disabled{ 
+  background-color: #e2e8f0 !important;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
 input,
 select {
   width: 95%;
@@ -682,17 +688,17 @@ h1.title-dashboard,
 }
 
 .green-block {
-  background-color: #d1fae5 !important;
+  background-color: #f0f9f4 !important;
   border-left: 4px solid #16a34a !important;
 }
 
 .red-block {
-  background-color: #faf1f1 !important;
+  background-color: #f5f2f2 !important;
   border-left: 4px solid #dc2626 !important;
 }
 
 .blue-block {
-  background-color: #e8eff8 !important;
+  background-color: #edf0f5 !important;
   border-left: 4px solid #3b82f6 !important;
 }
 

@@ -8,7 +8,7 @@ export default function TransactionToggle({ transactionType, setTransactionType,
           Acheter
         </button>
         <button
-          className={`btn-red toggle-btn ${transactionType === 'vente' ? 'active' : ''}`}
+          className={`${isButtonDisabled ? 'disabled' : 'enabled'} btn-red toggle-btn ${transactionType === 'vente' ? 'active' : ''}`}
           onClick={() => setTransactionType('vente')}
           disabled={isButtonDisabled}
         >
