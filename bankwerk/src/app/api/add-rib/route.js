@@ -10,6 +10,7 @@ export async function POST(req) {
                 headers: { 'Content-Type': 'application/json' },
             })
         }
+        
         if (!newRib) {
             return new Response(JSON.stringify({ error: 'RIB manquant' }), {
                 status: 400,

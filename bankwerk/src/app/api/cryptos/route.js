@@ -1,8 +1,8 @@
 import { db } from '../../../config/firebaseAdmin'
-
+import { updateCryptoCollection } from '../../../services/cryptos/cryptoCollection'
 export async function GET() {
     try {
-        
+        updateCryptoCollection()
         const cryptoSnapshot = await db.collection('Crypto').orderBy('rang', 'asc').get()
         const cryptos = cryptoSnapshot.docs.map(doc => doc.data())
 

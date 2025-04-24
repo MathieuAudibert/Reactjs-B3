@@ -4,7 +4,7 @@ export async function GET(req) {
     try {
         const { searchParams } = new URL(req.url)
         const uid = searchParams.get('uid')
-        
+
         if (!uid) {
             return new Response(JSON.stringify({ error: 'UID manquant' }), {
                 status: 400,
@@ -22,15 +22,27 @@ export async function GET(req) {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-            })  
+            })
         }
-        
+
         const solde = soldeDoc.data().solde
         const rib = soldeDoc.data().rib
-        return new Response(JSON.stringify({ solde, rib }), {
+        const crypto = soldeDoc.data().cryptos || []
+
+        const transactionsRef = db.collection('Transactions')
+
+        
+        const query1 = transactionsRef.where('id_compte', '==', uid)
+        const snapshot1 = await query1.get()
+
+        const transactionLog = []
+        snapshot1.forEach(doc => transactionLog.push({ id: doc.id, ...doc.data() }))
+        
+        return new Response(JSON.stringify({ solde, rib, crypto, transaction_log: transactionLog }), {
             headers: {
                 'Content-Type': 'application/json',
             },
+            
         })
 
     } catch (error) {

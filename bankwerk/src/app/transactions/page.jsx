@@ -93,7 +93,7 @@ export default function Transactions() {
       }
 
       if (!knownRibs.some(rib => rib === formData.rib_cible)) {
-        await fetch(`/api/add-known-rib`, {
+        await fetch(`/add-rib`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -120,7 +120,7 @@ export default function Transactions() {
   }
 
   return (
-    <div className="container">
+    <div className="container-transac">
       <h1>Effectuer un transfert</h1>
       
       {error && <div className="alert error">{error}</div>}
@@ -134,45 +134,16 @@ export default function Transactions() {
             value={userRib}
             readOnly
             className="read-only-input"
+            id='rib'
           />
         </div>
 
         <div className="form-group">
-          <label>RIB Bénéficiaire:</label>
-          
           <div className="rib-input-container">
             <div className="rib-input-options">
-              <button
-                type="button"
-                className={`rib-mode-btn ${ribInputMode === 'select' ? 'active' : ''}`}
-                onClick={() => setRibInputMode('select')}
-              >
-                Choisir un RIB connu
-              </button>
-              <button
-                type="button"
-                className={`rib-mode-btn ${ribInputMode === 'input' ? 'active' : ''}`}
-                onClick={() => setRibInputMode('input')}
-              >
-                Saisir un nouveau RIB
-              </button>
             </div>
 
-            {ribInputMode === 'select' ? (
-              <select
-                name="rib_cible"
-                value={formData.rib_cible}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Sélectionnez un RIB</option>
-                {knownRibs.map(rib => (
-                  <option key={rib} value={rib}>
-                    {rib}
-                  </option>
-                ))}
-              </select>
-            ) : (
+          <label>Entrez le RIB:</label>
               <input
                 type="text"
                 name="rib_cible"
@@ -180,14 +151,15 @@ export default function Transactions() {
                 onChange={handleChange}
                 placeholder="Entrez le RIB bénéficiaire"
                 required
+                id='rib'
               />
-            )}
           </div>
         </div>
 
         <div className="form-group">
           <label>Montant:</label>
           <input
+            id='montant'
             type="number"
             name="montant"
             value={formData.montant}

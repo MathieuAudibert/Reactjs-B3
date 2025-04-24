@@ -1,3 +1,5 @@
+
+
 const { auth, db } = require('../../../config/firebaseAdmin')
 const bcrypt = require('bcrypt')
 
@@ -45,9 +47,6 @@ export async function POST(req) {
             compte_id: user.uid,
             date_crea: createdDate
         })
-
-        const userRef = db.collection('Users').doc(user.uid)
-        const userDoc = await userRef.get()
         const userSolde = 0
 
         await db.collection('Compte').doc(user.uid).set({
