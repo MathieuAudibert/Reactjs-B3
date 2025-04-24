@@ -20,7 +20,6 @@ export default function CryptoPage() {
             }
 
             const data = await response.json()
-            console.log('Fetched cryptos:', data)
             setCryptos(data)
             setIsLoading(false)
             setTimer(60)
@@ -81,7 +80,7 @@ export default function CryptoPage() {
     return (
         <div className="container">
             <h1>Les cryptomonnaies</h1>
-            <button onClick={handleUpdateClick} disabled={isButtonDisabled}>
+            <button onClick={handleUpdateClick} disabled={isButtonDisabled} className='btn-blueDark'>
                 {isButtonDisabled ? `Mettre à jour dans ${timer}s` : 'Mettre à jour la collection'}
             </button>
             <div className="card-container">

@@ -1,4 +1,3 @@
-
 import { db } from '../../../config/firebaseAdmin'
 
 export async function GET(req) {
