@@ -4,4 +4,8 @@ export function genereRIB() {
     return prefix + chiffres
 }
 
-
+export function convertTimestamp(timestamp) {
+    if (!timestamp) return 'N/A';
+    const date = new Date(timestamp);
+    return date.toLocaleString(); 
+  }
