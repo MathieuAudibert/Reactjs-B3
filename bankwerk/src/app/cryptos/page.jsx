@@ -52,6 +52,7 @@ export default function CryptoPage() {
     const handleUpdateClick = () => {
         setIsLoading(true)
         fetchCryptos()
+        location.reload()
     }
 
     const handleBuyClick = (cryptoSymbole) => {
@@ -79,7 +80,7 @@ export default function CryptoPage() {
 
     return (
         <div className="container">
-            <h1>Les cryptos</h1>
+            <h1>Les cryptomonnaies</h1>
             <button onClick={handleUpdateClick} disabled={isButtonDisabled}>
                 {isButtonDisabled ? `Mettre à jour dans ${timer}s` : 'Mettre à jour la collection'}
             </button>
@@ -88,7 +89,7 @@ export default function CryptoPage() {
                     cryptos.map((crypto, index) => (
                         <div className="card" key={index}>
                             <h3>{crypto.rang}</h3>
-                            <img src={crypto.image} alt="" />
+                            <img src={crypto.image} height="30" alt="" />
                             <h2>{crypto.nom} ({crypto.symbole})</h2>
                             <p>Prix: {crypto.prix.toFixed(2)}</p>
                             <p>Pourcentage 30j: {crypto.pourcent_30j.toFixed(2)}%</p>
