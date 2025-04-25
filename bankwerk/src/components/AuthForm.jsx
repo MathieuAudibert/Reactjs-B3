@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import { useRouter } from "next/navigation"
 import "../styles/globals.css"
 
@@ -15,12 +15,12 @@ export default function AuthForm({ mode }) {
   })
   const [error, setError] = useState("")
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
-  }
+  }, [])
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault()
     setError("")
 
@@ -51,7 +51,7 @@ export default function AuthForm({ mode }) {
     } catch (err) {
       setError(err.message)
     }
-  }
+  }, [formData, isLogin, router])
 
   return (
     <div className="auth-container">
@@ -67,6 +67,7 @@ export default function AuthForm({ mode }) {
                 value={formData.nom}
                 onChange={handleChange}
                 required
+                aria-label="Nom"
               />
               <input
                 type="text"
@@ -75,6 +76,7 @@ export default function AuthForm({ mode }) {
                 value={formData.prenom}
                 onChange={handleChange}
                 required
+                aria-label="Prénom"
               />
             </>
           )}
@@ -85,6 +87,7 @@ export default function AuthForm({ mode }) {
             value={formData.email}
             onChange={handleChange}
             required
+            aria-label="Email"
           />
           <input
             type="password"
@@ -93,6 +96,7 @@ export default function AuthForm({ mode }) {
             value={formData.mdp}
             onChange={handleChange}
             required
+            aria-label="Mot de passe"
           />
           <button type="submit">{isLogin ? "Se connecter" : "S'inscrire"}</button>
           {error && <p className="error">{error}</p>}
@@ -106,7 +110,7 @@ export default function AuthForm({ mode }) {
         </form>
       </div>
       <div className="image-side">
-        <img src="../../public/bankwerk.png" alt="Auth Image"/>
+        <img src="/bankwerk.png" alt="Auth Image" />
       </div>
     </div>
   )
