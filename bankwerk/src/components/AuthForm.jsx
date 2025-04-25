@@ -105,7 +105,9 @@ export default function AuthForm({ mode }) {
           </p>
         </form>
       </div>
-      <div className="image-side"></div>
+      <div className="image-side">
+        <img src="../../public/bankwerk.png" alt="Auth Image"/>
+      </div>
     </div>
   )
 }
