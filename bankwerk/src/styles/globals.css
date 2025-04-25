@@ -401,7 +401,7 @@ ul {
 
 .auth-container .image-side {
   flex: 1;
-  background: url('../../public/bankwerk.png') center/cover no-repeat;
+  background: center/cover no-repeat;
   border-left: 1px solid #e2e8f0;
 }
 
