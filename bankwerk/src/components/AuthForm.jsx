@@ -43,8 +43,8 @@ export default function AuthForm({ mode }) {
       if (isLogin) {
         localStorage.setItem("token", data.token)
         localStorage.setItem("user", JSON.stringify(data.uid))
-        router.push("/")
         window.location.reload()
+        window.location.href = "/"
       } else {
         router.push("/login")
       }
