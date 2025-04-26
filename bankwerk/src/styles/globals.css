@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
 body {
@@ -16,8 +17,7 @@ main {
 }
 
 .home {
-  padding:
-3rem 1rem;
+  padding: 3rem 1rem;
   flex-direction: column;
   align-items: center;
   text-align: center;
@@ -96,7 +96,6 @@ ul {
   background-color: #dc2626;
 }
 
-
 .title-dashboard {
   display: flex;
   justify-content: center;
@@ -124,8 +123,6 @@ ul {
   margin: 0 auto;
   padding: 1rem;
 }
-
-
 
 .login-box h1 {
   font-size: 1.8rem;
@@ -161,8 +158,7 @@ ul {
 }
 
 .buy-button {
-  padding:
-0.5rem;
+  padding: 0.5rem;
 }
 
 .form button {
@@ -204,6 +200,7 @@ ul {
   text-align: center;
   font-weight: 500;
 }
+
 .container-services {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -243,7 +240,6 @@ ul {
   color: #4b5563;
 }
 
-
 .auth-container {
   margin: 80px auto;
   display: flex;
@@ -256,70 +252,69 @@ ul {
   width: 95%;
   height: 620px;
   padding: 0;
+}
 
-  h1 {
-    font-size: 1.8rem;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    text-align: center;
-    color: #1a202c;
-  }
+.auth-container h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #1a202c;
+}
 
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 
-  input {
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 16px;
-    transition: border 0.3s;
+.auth-container input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border 0.3s;
+}
 
-    &:focus {
-      border-color: #1d4ed8;
-      outline: none;
-    }
-  }
+.auth-container input:focus {
+  border-color: #1d4ed8;
+  outline: none;
+}
 
-  button {
-    padding: 12px;
-    background-color: #1d4ed8;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s;
+.auth-container button {
+  padding: 12px;
+  background-color: #1d4ed8;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
 
-    &:hover {
-      background-color: #0a205c;
-    }
-  }
+.auth-container button:hover {
+  background-color: #0a205c;
+}
 
-  .auth-link {
-    text-align: center;
-    font-size: 0.9rem;
+.auth-container .auth-link {
+  text-align: center;
+  font-size: 0.9rem;
+}
 
-    a {
-      color: #1d4ed8;
-      text-decoration: none;
+.auth-container .auth-link a {
+  color: #1d4ed8;
+  text-decoration: none;
+}
 
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
+.auth-container .auth-link a:hover {
+  text-decoration: underline;
+}
 
-  .error {
-    color: red;
-    font-size: 14px;
-    text-align: center;
-  }
-  
+.auth-container .error {
+  color: red;
+  font-size: 14px;
+  text-align: center;
 }
 
 .auth-container .form-side {
@@ -416,8 +411,6 @@ ul {
   object-position: center;
 }
 
-
-
 .transaction-form {
   display: flex;
   flex-direction: column;
@@ -432,7 +425,7 @@ ul {
   color: #334155;
 }
 
-.disabled{ 
+.disabled {
   background-color: #e2e8f0 !important;
   color: #6b7280;
   cursor: not-allowed;
@@ -530,36 +523,28 @@ button[type="submit"]:hover {
   background-color: #e2e8f0;
 }
 
-
-
 .card-container {
   display: flex;
-  gap:
-2rem;
+  gap: 2rem;
   width: 88%;
   flex-direction: column;
-  margin:
-auto;
-    margin-top: auto;
+  margin: auto;
   margin-top: 20px;
 }
-
 
 .card {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(12px);
   border-radius: 16px;
-  transition:
-all .3s;
+  transition: all 0.3s;
   box-shadow: 0 8px 24px #0006;
   width: auto;
   height: 60px;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding:
-1rem;
+  padding: 1rem;
   transition: all 0.3s ease;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
@@ -598,7 +583,6 @@ p {
   font-weight: 500;
 }
 
-
 .dashboard-container {
   padding: 2rem;
   font-family: 'Poppins', sans-serif;
@@ -613,11 +597,12 @@ p {
   justify-content: center;
 }
 
-.positive-balance{
+.positive-balance {
   color: #16a34a;
   font-weight: 600;
 }
-.negative-balance{
+
+.negative-balance {
   color: #dc2626;
   font-weight: 600;
 }
@@ -633,7 +618,7 @@ p {
   padding: 2rem;
   border-radius: 10px;
   margin-bottom: 3rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .crypto-list {
@@ -647,28 +632,21 @@ p {
 
 .card-crypto {
   margin: auto;
-  background:
-#ffffff0d;
-  border:
-1px solid #ffffff1a;
+  background: #ffffff0d;
+  border: 1px solid #ffffff1a;
   backdrop-filter: blur(12px);
-  border-radius:
-16px;
-  transition:
-all .3s;
+  border-radius: 16px;
+  transition: all 0.3s;
   box-shadow: 0 8px 24px #0006;
   width: 85%;
   height: 20px;
-  padding:
-1rem;
-  transition:
-all .3s;
+  padding: 1rem;
+  transition: all 0.3s;
   box-shadow: 0 8px 24px #0006;
   display: flex;
   align-content: center;
   align-items: center;
-  padding:
-1rem;
+  padding: 1rem;
 }
 
 .card-crypto span {
@@ -680,17 +658,16 @@ all .3s;
   color: #1e40af;
 }
 
-
 h1.title-dashboard,
 .dashboard-block h2,
 .crypto-list h2 {
   font-weight: 600;
 }
 
-
 .crypto-list h2 {
   margin: 0;
 }
+
 /* Trois blocs du bas */
 .dashboard-bottom {
   display: flex;
@@ -714,7 +691,7 @@ h1.title-dashboard,
   border-left: 4px solid #3b82f6 !important;
 }
 
-.transaction-log-item{
+.transaction-log-item {
   border-bottom: 1px solid #000000;
   display: flex;
   justify-content: space-between;
@@ -722,15 +699,15 @@ h1.title-dashboard,
   width: 100%;
 }
 
-.symbol-items{
+.symbol-items {
   margin-right: 20px;
 }
 
-.price-items{
-  margin-top:21px;
+.price-items {
+  margin-top: 21px;
 }
 
-.service-us{
+.service-us {
   width: 100%;
 }
 
@@ -741,9 +718,8 @@ h1.title-dashboard,
   border: 1px solid #e5e5e5;
   border-radius: 6px;
   padding: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
-
 
 .dashboard-block h2,
 .crypto-list h2,
@@ -752,12 +728,12 @@ h1.title-dashboard,
   font-weight: 600;
   margin-bottom: 1rem;
 }
+
 .dashboard-block p {
   font-size: 1rem;
   color: #4b5563;
   margin-bottom: 0.5rem;
 }
-
 
 .timeline-item {
   background-color: #f0f0f0;
@@ -787,7 +763,6 @@ h1.title-dashboard,
 .show-more-button:hover {
   background-color: #0a2a9c;
 }
-
 
 /* profil */
 /* Profil utilisateur */
@@ -837,7 +812,7 @@ h1.title-dashboard,
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background-color: #e2e8f0; 
+  background-color: #e2e8f0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -859,12 +834,10 @@ h1.title-dashboard,
 .crypto-card-item {
   display: flex;
   align-content: center;
-  align-items: \\;
   align-items: center;
   width: 100%;
   justify-content: space-between;
 }
-
 
 .service-us {
   display: flex;
@@ -876,34 +849,33 @@ h1.title-dashboard,
   margin: 1rem auto;
   max-width: 800px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-
-  h2 {
-    margin: 0;
-    color: #0077ff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  h3 {
-    margin: 0;
-    font-size: 1.3rem;
-    color: #1a1a1a;
-  }
-
-  p {
-    margin: 0.2rem 0 0;
-    font-size: 1rem;
-    color: #555;
-  }
-
-  & > div {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
 }
 
+.service-us h2 {
+  margin: 0;
+  color: #0077ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.service-us h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #1a1a1a;
+}
+
+.service-us p {
+  margin: 0.2rem 0 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.service-us > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 
 .contact-form {
   max-width: 600px;
@@ -911,7 +883,7 @@ h1.title-dashboard,
   padding: 2rem;
   background: #fff;
   border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
 }
 
 .contact-form h2 {
@@ -925,7 +897,7 @@ h1.title-dashboard,
   color: #555;
 }
 
-.transaction-toggle{
+.transaction-toggle {
   display: flex;
   justify-content: space-evenly;
   width: 15%;
@@ -946,8 +918,8 @@ h1.title-dashboard,
   width: 20%;
   margin: auto;
 }
-.contact-form input
- {
+
+.contact-form input {
   padding: 1rem;
   margin-bottom: 1rem;
   border-radius: 8px;
@@ -956,7 +928,7 @@ h1.title-dashboard,
   background: #f9f9f9;
 }
 
-.contact-form textarea{
+.contact-form textarea {
   width: 95%;
   padding: 1rem;
   margin-bottom: 1rem;
@@ -988,4 +960,164 @@ h1.title-dashboard,
   margin-bottom: 1rem;
   color: #2c7a45;
   border-radius: 8px;
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+  main {
+    width: 95%;
+  }
+
+  nav {
+    padding: 1rem;
+  }
+
+  nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .home h1 {
+    font-size: 2rem;
+  }
+
+  .home p {
+    font-size: 1rem;
+  }
+
+  .container,
+  .container-transac {
+    padding: 1rem;
+  }
+
+  .auth-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .auth-container .form-side,
+  .auth-container .image-side {
+    padding: 2rem;
+  }
+
+  .auth-container h1 {
+    font-size: 2rem;
+  }
+
+  .auth-container form {
+    gap: 1rem;
+  }
+
+  .auth-container input {
+    padding: 14px;
+  }
+
+  .auth-container button {
+    padding: 14px;
+    font-size: 1rem;
+  }
+
+  .transaction-form {
+    gap: 1rem;
+  }
+
+  .card-container {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .card {
+    height: auto;
+    padding: 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card h2 {
+    font-size: 1.1rem;
+    margin-top: 0;
+  }
+
+  .card p {
+    font-size: 0.85rem;
+  }
+
+  .dashboard-container {
+    padding: 1rem;
+  }
+
+  .dashboard-top {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dashboard-mid {
+    padding: 1rem;
+  }
+
+  .crypto-list {
+    gap: 0.5rem;
+  }
+
+  .card-crypto {
+    width: 100%;
+    height: auto;
+    padding: 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card-crypto span {
+    font-size: 0.85rem;
+  }
+
+  .dashboard-bottom {
+    flex-direction: column;
+  }
+
+  .profile-title {
+    font-size: 2rem;
+  }
+
+  .profile-wrapper {
+    padding: 0.5rem;
+  }
+
+  .profile-card {
+    padding: 1.5rem;
+  }
+
+  .profile-item {
+    font-size: 1rem;
+  }
+
+  .contact-form {
+    margin: 2rem auto;
+    padding: 1.5rem;
+  }
+
+  .contact-form h2 {
+    font-size: 1.8rem;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .contact-form .btn-blue {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .transaction-toggle {
+    width: 100%;
+    margin: 1rem 0;
+  }
+
+  .form-actions {
+    width: 100%;
+    margin: 1rem 0;
+  }
 }

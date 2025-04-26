@@ -7,6 +7,7 @@ export default function CryptoPage() {
     const [isLoading, setIsLoading] = useState(true)
     const [timer, setTimer] = useState(60)
     const [isButtonDisabled, setIsButtonDisabled] = useState(false)
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
     const router = useRouter()
 
     const fetchCryptos = async () => {
@@ -33,31 +34,37 @@ export default function CryptoPage() {
     useEffect(() => {
         fetchCryptos()
 
-        const interval = setInterval(() => {
-            setTimer((prevTimer) => {
-                if (prevTimer > 0) {
-                    return prevTimer - 1
-                } else {
-                    clearInterval(interval)
-                    setIsButtonDisabled(false)
-                    return 0
-                }
-            })
-        }, 1000)
+        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+        setIsAuthenticated(!!token)
 
-        return () => clearInterval(interval)
+        if (token) {
+            const interval = setInterval(() => {
+                setTimer((prevTimer) => {
+                    if (prevTimer > 0) {
+                        return prevTimer - 1
+                    } else {
+                        clearInterval(interval)
+                        setIsButtonDisabled(false)
+                        return 0
+                    }
+                })
+            }, 1000)
+
+            return () => clearInterval(interval)
+        }
     }, [])
 
     const handleUpdateClick = () => {
-        setIsLoading(true)
-        fetchCryptos()
-        location.reload()
+        if (isAuthenticated) {
+            setIsLoading(true)
+            fetchCryptos()
+        } else {
+            router.push('/login')
+        }
     }
 
     const handleDetailClick = (cryptoSymbole) => {
-        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
-
-        if (token) {
+        if (isAuthenticated) {
             router.push(`/cryptos/${cryptoSymbole}`)
         } else {
             router.push('/login')
@@ -71,9 +78,11 @@ export default function CryptoPage() {
     return (
         <div className="container">
             <h1>Les cryptomonnaies</h1>
-            <button onClick={handleUpdateClick} disabled={isButtonDisabled} className='btn-blueDark'>
-                {isButtonDisabled ? `Mettre à jour dans ${timer}s` : 'Mettre à jour la collection'}
-            </button>
+            {isAuthenticated && (
+                <button onClick={handleUpdateClick} disabled={isButtonDisabled} className='btn-blueDark'>
+                    {isButtonDisabled ? `Mettre à jour dans ${timer}s` : 'Mettre à jour la collection'}
+                </button>
+            )}
             <div className="card-container">
                 {cryptos.length > 0 ? (
                     cryptos.map((crypto, index) => (
