@@ -401,9 +401,22 @@ ul {
 
 .auth-container .image-side {
   flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: center/cover no-repeat;
   border-left: 1px solid #e2e8f0;
+  overflow: hidden;
 }
+
+.auth-container .image-side img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+
 
 .transaction-form {
   display: flex;
