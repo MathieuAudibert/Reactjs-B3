@@ -1219,6 +1219,10 @@ h1.title-dashboard,
     width: 100%; 
     text-align: left; 
   }
+
+  .auth-container .image-side {
+    display: none; 
+  }
   
 }
 
