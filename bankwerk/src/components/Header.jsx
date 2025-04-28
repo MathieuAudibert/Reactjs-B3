@@ -72,13 +72,13 @@ export default function Header() {
                         </li>
                         <li className="desktop-only">
                             <button
-                              onClick={() => {
-                                  router.push("/profile")
-                                  setMenuOpen(false)
-                              }}
-                              className="header-profile-icon"
+                                onClick={() => {
+                                    router.push("/profile")
+                                    setMenuOpen(false)
+                                }}
+                                className="header-profile-icon"
                             >
-                              <UserCircle size={28} weight="fill" />
+                                <UserCircle size={28} weight="fill" />
                             </button>
                         </li>
                         <li>
@@ -86,29 +86,20 @@ export default function Header() {
                         </li>
                     </ul>
                 ) : (
-                    <React.Fragment>
-                        <div className="navbar-links">
-                            <ul>
-                                <li>
-                                    <Link href="/services" onClick={() => setMenuOpen(false)}>Nos Services</Link>
-                                </li>
-                                <li>
-                                    <Link href="/cryptos" onClick={() => setMenuOpen(false)}>Cryptomonnaies</Link>
-                                </li>
-                                <li>
-                                    <Link href="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div className="navbar-auth">
-                            <ul>
-                                <li>
-                                    <Link href="/login" className="btn-blueDark" onClick={() => setMenuOpen(false)}>Mon compte</Link>
-                                </li>
-                            </ul>
-                        </div>
-                    </React.Fragment>
+                    <ul className="navbar-full-width">
+                        <li>
+                            <Link href="/services" onClick={() => setMenuOpen(false)}>Nos Services</Link>
+                        </li>
+                        <li>
+                            <Link href="/cryptos" onClick={() => setMenuOpen(false)}>Cryptomonnaies</Link>
+                        </li>
+                        <li>
+                            <Link href="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
+                        </li>
+                        <li className="navbar-auth-item">
+                            <Link href="/login" className="btn-blueDark" onClick={() => setMenuOpen(false)}>Mon compte</Link>
+                        </li>
+                    </ul>
                 )}
             </div>
         </nav>
